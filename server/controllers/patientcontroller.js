@@ -1,10 +1,12 @@
 const Login = require("../models/login");
-const PatientDetails = require("../models/patient");
+const Patient = require("../models/patient");
 
-exports.addPatient = async (req, res) => {
+exports.register = async (req, res) => {
   try {
     const {
-      userId,
+      username,
+      password,
+      role,
       patientId,
       name,
       address,
@@ -12,18 +14,26 @@ exports.addPatient = async (req, res) => {
       email,
       phone,
       blood_group,
-      insurance,
+      insurance
     } = req.body;
 
-    // ✅ Check if userId exists in login collection
-    const user = await Login.findById(userId);
-    if (!user) {
-      return res.status(400).json({ message: "Invalid userId. User not found." });
-    }
+    // ✅ 1. Auto-generate userId
+    const lastUser = await Login.findOne().sort({ userId: -1 });
+    const newUserId = lastUser ? lastUser.userId + 1 : 1;
 
-    // ✅ Create patient record
-    const patient = new PatientDetails({
-      userId,
+    // ✅ 2. Create login record
+    const loginUser = new Login({
+      userId: newUserId,
+      username,
+      password,
+      role
+    });
+
+    await loginUser.save();
+
+    // ✅ 3. Create patient record (using loginId)
+    const patient = new Patient({
+      userId: newUserId,
       patientId,
       name,
       address,
@@ -31,15 +41,17 @@ exports.addPatient = async (req, res) => {
       email,
       phone,
       blood_group,
-      insurance,
+      insurance
     });
 
     await patient.save();
 
     res.status(201).json({
-      message: "✅ Patient added successfully",
-      patient,
+      message: "Registration successful",
+      login: loginUser,
+      patient: patient
     });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

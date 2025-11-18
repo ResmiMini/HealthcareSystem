@@ -11,10 +11,30 @@ app.use(cors());
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
-// ✅ Test
-app.get("/", (req, res) => {
-  res.send("Server running");
-});
+
+const doctorRoutes = require("./routes/doctorRoutes");
+app.use("/api/doctors", doctorRoutes);
+
+
+const staffRoutes = require("./routes/staffRoutes");
+app.use("/api/staff", staffRoutes);
+
+
+//APPOINTMENT ROUTES
+
+
+const appointmentRoutes = require("./routes/appointmentRoutes");
+
+app.use("/api/bookAppointment", appointmentRoutes);
+
+//prescription routes
+
+
+const prescriptionRoutes = require("./routes/prescriptionRoutes");
+app.use("/api/prescriptions", prescriptionRoutes);
+
+
+
 
 mongoose
   .connect(process.env.MONGO_URI)

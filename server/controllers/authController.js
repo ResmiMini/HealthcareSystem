@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
 
     // ✅ 3. Create patient record (using loginId)
     const patient = new Patient({
-      loginId: loginUser._id,
+      userId: newUserId,
       patientId,
       name,
       address,
