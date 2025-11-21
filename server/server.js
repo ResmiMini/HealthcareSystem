@@ -34,6 +34,15 @@ const prescriptionRoutes = require("./routes/prescriptionRoutes");
 app.use("/api/prescriptions", prescriptionRoutes);
 
 
+//medicine
+const medicineRoutes = require("./routes/medicineRoutes");
+app.use("/api/medicines", medicineRoutes);
+
+//labreports
+
+
+const labReportRoutes = require("./routes/labReportRoutes");
+app.use("/api/labreports", labReportRoutes);
 
 
 mongoose
