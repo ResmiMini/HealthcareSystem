@@ -10,7 +10,10 @@ app.use(cors());
 // ✅ Routes
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
+//loginroutes
 
+const loginRoutes = require("./routes/loginRoutes");
+app.use("/api/login", loginRoutes);
 
 const doctorRoutes = require("./routes/doctorRoutes");
 app.use("/api/doctors", doctorRoutes);
