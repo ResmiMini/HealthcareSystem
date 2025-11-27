@@ -1,33 +1,72 @@
+const Login = require("../models/login");
 
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-const Logins = require("../models/login");
-
-// POST: Login user
-exports.loginUser = async (req, res) => {
-  const { username, password } = req.body;
-
+exports.addlogin = async (req, res) => {
   try {
-    // Check if user exists in Atlas
-    const user = await Logins.findOne({ username, password });
+    const { username, password, role } = req.body;
 
-    if (!user) {
-      return res.status(401).json({ message: "Invalid username or password" });
+    // AUTO GENERATE USER ID
+    const lastUser = await Login.findOne().sort({ userId: -1 });
+    const newuserId = lastUser ? lastUser.userId + 1 : 1;
+
+    const newLogin = new Login({
+      userId:newuserId,
+      username,
+      password,
+      role
+    });
+
+    await newLogin.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Login created successfully",
+       userId: newuserId,     // <-- RETURN userId
+      login: newLogin     
+    });
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+//user login using username and password
+exports.loginUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Check if both fields provided
+    if (!username || !password) {
+      return res.status(400).json({ message: "Username and password are required" });
     }
 
+    // Find user by username
+    const user = await Login.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check password match
+    if (user.password !== password) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    // Success
     res.status(200).json({
+      success: true,
       message: "Login successful",
       user: {
-        id: user._id,
+        userId: user.userId,
         username: user.username,
-        password:user.password,
-        role:user.role
+        role: user.role
       }
     });
+
   } catch (error) {
-    res.status(500).json({
-      message: "Server Error",
-      error: error.message,
-    });
+    console.error("LOGIN ERROR:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

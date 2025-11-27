@@ -11,7 +11,7 @@ const loginSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
 
     password: {
@@ -23,7 +23,7 @@ const loginSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "patient", "doctor", "staff"],
       default: "patient",
-    }
+    },
   },
   { timestamps: true }
 );

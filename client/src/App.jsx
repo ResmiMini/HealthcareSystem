@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import './index.css'
 import React from 'react'
-import HomePage from './pages/Homepage'
+import Register from './pages/Register';
+import HomePage from './pages/Homepage';
 import About from "./pages/About";
 import Navbar from './components/NavBar';
 import Login from './pages/Login';
@@ -23,11 +24,11 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/patientdashboard" element={<PatientDashboard />} />
-         {/*<Route path="/register" element={<Register />} />
-        <Route path="/feedback" element={<Feedback/>} />
+         <Route path="/register" element={<Register/>} />
+        {/* <Route path="/feedback" element={<Feedback/>} />
         <Route path="/statistics" element={<Statistics/>} />
         <Route path="/usermgt" element={<User/>} />
-        <Route path="*" element={<ErrorPage />} /> */}
+        <Route path="*" element={<ErrorPage />} />  */}
       </Routes>
     </>
   )

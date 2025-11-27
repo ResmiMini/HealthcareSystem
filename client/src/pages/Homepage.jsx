@@ -1,5 +1,5 @@
 import React from "react";
-
+import Footer from "../components/Footer";
 import StatsSection from "../components/StatsSection";
 import Navbar from "../components/NavBar";
 import whitelogo from"../assets/image/whitelogo.png"
@@ -9,7 +9,7 @@ const HomePage = () => {
     <div className="font-sans  w-[full] ">
           
 <br></br>
-  <div className="relative bg-cover bg-gradient-to-r from-[#0097A0] to-[#03506F]  rounded-[10px] mx-10 px-20 py-[4cm] text-[#0097A0] flex flex-col md:flex-row items-center">
+  <div className="relative bg-cover bg-gradient-to-r from-[#0097A0] to-[#03506F]  rounded-[10px] mx-10 px-10 py-[2cm] text-[#0097A0] flex flex-col md:flex-row items-center">
 
   
   <div className="md:w-1/2  text-center md:text-center">
@@ -39,6 +39,7 @@ const HomePage = () => {
 
  </div>
 <StatsSection/>
+<Footer/>
     </div>
   );
 };

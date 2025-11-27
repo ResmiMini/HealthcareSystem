@@ -8,10 +8,15 @@ app.use(express.json());
 app.use(cors());
 
 // ✅ Routes
-const authRoutes = require("./routes/authRoutes");
-app.use("/api/auth", authRoutes);
-//loginroutes
+// const authRoutes = require("./routes/authRoutes");
+// app.use("/api/patient", authRoutes);
 
+ //patient routes
+ const patientroutes=require("./routes/patientroutes");
+app.use("/api/patient",patientroutes)
+
+
+//loginroutes
 const loginRoutes = require("./routes/loginRoutes");
 app.use("/api/login", loginRoutes);
 

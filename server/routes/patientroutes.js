@@ -1,13 +1,10 @@
 const express = require("express");
+const { addPatient, getAllPatients, getPatientById } = require("../controllers/patientcontroller");
+
 const router = express.Router();
-const { addPatient } = require("../controllers/patientcontroller");
 
-// Test route
-router.get("/test", (req, res) => {
-  res.send("✅ Patient route working");
-});
-
-// Add patient route
-router.post("/add-patient", addPatient);
+router.post("/addpatient", addPatient);
+router.get("/allpatient", getAllPatients);
+router.get("/:patientId", getPatientById);
 
 module.exports = router;

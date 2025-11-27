@@ -1,16 +1,21 @@
 const mongoose = require("mongoose");
 
+// Auto-generate patientId using a counter
+const generatePatientId = () => {
+  return "PAT" + Math.floor(1000 + Math.random() * 9000); 
+};
+
 const patientSchema = new mongoose.Schema(
   {
     userId: {
-      type:Number,
+      type: Number,        
       ref: "Login",
-      required: true,
+      required: true
     },
 
     patientId: {
       type: String,
-      required: true,
+      default: generatePatientId,
       unique: true
     },
 
@@ -27,6 +32,10 @@ const patientSchema = new mongoose.Schema(
     age: {
       type: Number,
       required: true
+    },
+
+    dob: {
+      type: Date
     },
 
     email: {
@@ -48,8 +57,5 @@ const patientSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     }
-  },
-  { timestamps: true }
-);
-
-module.exports = mongoose.model("Patient", patientSchema);
+  })
+module.exports = mongoose.model("Patient",patientSchema);

@@ -1,58 +1,44 @@
-const Login = require("../models/login");
 const Patient = require("../models/patient");
 
-exports.register = async (req, res) => {
+// ADD Patient
+
+exports.addPatient = async (req, res) => {
   try {
-    const {
-      username,
-      password,
-      role,
-      patientId,
-      name,
-      address,
-      age,
-      email,
-      phone,
-      blood_group,
-      insurance
-    } = req.body;
-
-    // ✅ 1. Auto-generate userId
-    const lastUser = await Login.findOne().sort({ userId: -1 });
-    const newUserId = lastUser ? lastUser.userId + 1 : 1;
-
-    // ✅ 2. Create login record
-    const loginUser = new Login({
-      userId: newUserId,
-      username,
-      password,
-      role
-    });
-
-    await loginUser.save();
-
-    // ✅ 3. Create patient record (using loginId)
-    const patient = new Patient({
-      userId: newUserId,
-      patientId,
-      name,
-      address,
-      age,
-      email,
-      phone,
-      blood_group,
-      insurance
-    });
-
+    const patient = new Patient(req.body);
     await patient.save();
 
     res.status(201).json({
-      message: "Registration successful",
-      login: loginUser,
-      patient: patient
+      message: "Patient Registered Successfully",
+      data: patient
     });
-
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: "Failed to register patient",
+      details: err
+    });
+  }
+};
+
+// GET all patients
+exports.getAllPatients = async (req, res) => {
+  try {
+    const patients = await Patient.find().populate("userId");
+    res.status(200).json(patients);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch patients" });
+  }
+};
+
+// GET patient by ID
+exports.getPatientById = async (req, res) => {
+  try {
+    const patient = await Patient.findOne({ patientId: req.params.patientId });
+
+    if (!patient)
+      return res.status(404).json({ message: "Patient not found" });
+
+    res.status(200).json(patient);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch patient" });
   }
 };
