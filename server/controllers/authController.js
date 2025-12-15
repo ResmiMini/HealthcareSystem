@@ -17,20 +17,8 @@ exports.register = async (req, res) => {
       insurance
     } = req.body;
 
-    // ✅ 1. Auto-generate userId
-    const lastUser = await Login.findOne().sort({ userId: -1 });
-    const newUserId = lastUser ? lastUser.userId + 1 : 1;
-
-    // ✅ 2. Create login record
-    const loginUser = new Login({
-      userId: newUserId,
-      username,
-      password,
-      role
-    });
-
-    await loginUser.save();
-
+    
+    
     // ✅ 3. Create patient record (using loginId)
     const patient = new Patient({
       userId: newUserId,

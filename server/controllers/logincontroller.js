@@ -1,72 +1,95 @@
 const Login = require("../models/login");
+const Doctor=require("../models/doctor");
 
 exports.addlogin = async (req, res) => {
   try {
-    const { username, password, role } = req.body;
+    const { username, password } = req.body;
 
-    // AUTO GENERATE USER ID
-    const lastUser = await Login.findOne().sort({ userId: -1 });
-    const newuserId = lastUser ? lastUser.userId + 1 : 1;
+    const user = await Login.findOne({ username, password });
 
-    const newLogin = new Login({
-      userId:newuserId,
-      username,
-      password,
-      role
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid username or password"
+      });
+    }
+
+    // 🔐 Doctor approval check
+    if (user.role === "doctor") {
+      const doctor = await Doctor.findOne({
+        userId: Number(user.userId)
+      });
+
+      if (!doctor) {
+        return res.status(403).json({
+          message: "Doctor profile not found"
+        });
+      }
+
+      if (doctor.status !== "approved") {
+        return res.status(403).json({
+          message: "Your account is not approved yet. Please wait for admin approval."
+        });
+      }
+    }
+
+    // ✅ Login success
+    return res.status(200).json({
+      user: {
+        userId: user.userId,
+        username: user.username,
+        role: user.role
+      },
+      token: "dummy-token"
     });
 
-    await newLogin.save();
-
-    res.status(201).json({
-      success: true,
-      message: "Login created successfully",
-       userId: newuserId,     // <-- RETURN userId
-      login: newLogin     
+  } catch (err) {
+    console.error("LOGIN ERROR 👉", err);
+    return res.status(500).json({
+      message: "Internal server error"
     });
-
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: error.message });
   }
 };
 
 
 
 //user login using username and password
+
+
 exports.loginUser = async (req, res) => {
+  
   try {
     const { username, password } = req.body;
 
-    // Check if both fields provided
-    if (!username || !password) {
-      return res.status(400).json({ message: "Username and password are required" });
-    }
+    console.log("LOGIN REQUEST:", username, password);
 
-    // Find user by username
-    const user = await Login.findOne({ username });
+    const user = await Login.findOne({ username, password });
+    console.log("LOGIN USER:", user);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Check password match
-    if (user.password !== password) {
-      return res.status(401).json({ message: "Invalid password" });
-    }
+    if (user.role === "doctor") {
+      console.log("Checking doctor status for userId:", user.userId);
 
-    // Success
-    res.status(200).json({
-      success: true,
-      message: "Login successful",
-      user: {
-        userId: user.userId,
-        username: user.username,
-        role: user.role
+      const doctor = await Doctor.findOne({ userId: user.userId });
+      console.log("DOCTOR:", doctor);
+
+      if (!doctor || doctor.status !== "approved") {
+        return res.status(403).json({
+          message: "Your account is not approved yet."
+        });
       }
+    }
+
+    res.status(200).json({
+      user,
+      token: "dummy-token"
     });
 
-  } catch (error) {
-    console.error("LOGIN ERROR:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    console.error("LOGIN ERROR 👉", err);   // 🔥 THIS WILL SHOW ROOT CAUSE
+    res.status(500).json({ message: err.message });
   }
 };
+

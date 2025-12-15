@@ -3,15 +3,44 @@ const Medicine = require("../models/medicine");
 // ➤ Add Medicine
 exports.addMedicine = async (req, res) => {
   try {
-    const medicine = new Medicine(req.body);
+    const { name, category, price } = req.body;
+
+    if (!name || !category || !price) {
+      return res.status(400).json({
+        message: "All fields are required"
+      });
+    }
+
+    // ✅ AUTO-GENERATE UNIQUE MEDICINE ID
+    const lastMedicine = await Medicine.findOne()
+      .sort({ createdAt: -1 });
+
+    let newMedicineId = "MED001";
+
+    if (lastMedicine) {
+      const lastNum = parseInt(
+        lastMedicine.medicineId.replace("MED", "")
+      );
+      MedicineId =
+        "MED" + String(lastNum + 1).padStart(3, "0");
+    }
+
+    const medicine = new Medicine({
+      MedicineId,
+      name,
+      category,
+      price
+    });
+
     await medicine.save();
 
     res.status(201).json({
       message: "Medicine added successfully",
-      data: medicine,
+      medicine
     });
+
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 

@@ -4,7 +4,7 @@ const medicineSchema = new mongoose.Schema({
   name: String,
   dosage: String,
   frequency: String,
-  duration: String
+  duration: Number
 });
 
 const prescriptionSchema = new mongoose.Schema({

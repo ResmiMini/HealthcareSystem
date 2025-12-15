@@ -2,6 +2,7 @@ import {useState } from "react";
 import {useNavigate } from "react-router-dom";
 import axios from "axios"
 import React from "react";
+import Footer from "../components/Footer";
 export default function RegisterForm() {
   const navigate=useNavigate();
 
@@ -10,6 +11,7 @@ export default function RegisterForm() {
     name: "",
     age: "",
     dob: "",
+    gender:"",
     email: "",
     phone: "",
     address: "",
@@ -72,6 +74,7 @@ export default function RegisterForm() {
       name: formData.name,
       age: formData.age,
       dob: formData.dob,
+      gender:formData.gender,
       email: formData.email,
       phone: formData.phone,
       address: formData.address,
@@ -90,6 +93,7 @@ export default function RegisterForm() {
   }
 };
   return (
+    <>
     <div className="flex justify-center bg-[url('/src/assets/image/back.jpg')] items-center min-h-screen bg-gray-100 p-4">
       <form
         onSubmit={handleSubmit}
@@ -137,6 +141,54 @@ export default function RegisterForm() {
     required
   />
 </div>
+
+<div className="mb-4">
+  <label className="block font-medium mb-2">Gender</label>
+
+  <div className="flex gap-6">
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="Male"
+        checked={formData.gender === "Male"}
+        onChange={handleChange}
+        className="accent-yellow-600"
+      />
+      Male
+    </label>
+
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="Female"
+        checked={formData.gender === "Female"}
+        onChange={handleChange}
+        className="accent-yellow-600"
+      />
+      Female
+    </label>
+
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="Other"
+        checked={formData.gender === "Other"}
+        onChange={handleChange}
+        className="accent-yellow-600"
+      />
+      Other
+    </label>
+  </div>
+</div>
+
+
+
+
+
+
 
         {/* Email */}
         <input
@@ -233,5 +285,7 @@ export default function RegisterForm() {
         </button>
       </form>
     </div>
+    <Footer/>
+</>
   );
 }

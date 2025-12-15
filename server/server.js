@@ -2,10 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-
+const path = require("path");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ✅ Routes
 // const authRoutes = require("./routes/authRoutes");
@@ -20,8 +21,10 @@ app.use("/api/patient",patientroutes)
 const loginRoutes = require("./routes/loginRoutes");
 app.use("/api/login", loginRoutes);
 
+
+//doctor routes
 const doctorRoutes = require("./routes/doctorRoutes");
-app.use("/api/doctors", doctorRoutes);
+app.use("/api/doctor", doctorRoutes);
 
 
 const staffRoutes = require("./routes/staffRoutes");
@@ -32,8 +35,7 @@ app.use("/api/staff", staffRoutes);
 
 
 const appointmentRoutes = require("./routes/appointmentRoutes");
-
-app.use("/api/bookAppointment", appointmentRoutes);
+app.use("/api/appointment", appointmentRoutes);
 
 //prescription routes
 
@@ -44,7 +46,17 @@ app.use("/api/prescriptions", prescriptionRoutes);
 
 //medicine
 const medicineRoutes = require("./routes/medicineRoutes");
-app.use("/api/medicines", medicineRoutes);
+app.use("/api/medicine", medicineRoutes);
+
+//medical records
+const medicalrecord = require("./routes/medicalRecordRoutes");
+app.use("/api/medicalrecord", medicalrecord);
+
+
+
+const paymentRoutes = require("./routes/paymentRoutes");
+app.use("/api/payment", paymentRoutes);
+
 
 //labreports
 

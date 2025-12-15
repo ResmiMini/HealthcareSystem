@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("../controllers/prescriptionController");
 
 // CRUD
-router.post("/add", controller.createPrescription);
+router.post("/addprescription", controller.createPrescription);
 router.get("/", controller.getAllPrescriptions);
 router.get("/:id", controller.getPrescriptionById);
 router.put("/:id", controller.updatePrescription);

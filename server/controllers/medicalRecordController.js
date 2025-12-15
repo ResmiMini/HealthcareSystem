@@ -2,18 +2,40 @@ const MedicalRecord = require("../models/MedicalRecord");
 
 // Create record
 exports.createRecord = async (req, res) => {
+  
   try {
-    const record = new MedicalRecord(req.body);
+    const { patientId, doctorId, appointmentId, symptoms, diagnosis } = req.body;
+   
+
+    const last = await MedicalRecord.findOne().sort({ createdAt: -1 });
+    let recordId = "MR001";
+
+    if (last) {
+      const num = parseInt(last.recordId.replace("MR", ""));
+      recordId = "MR" + String(num + 1).padStart(3, "0");
+    }
+
+    const record = new MedicalRecord({
+      recordId,
+      patientId,
+      doctorId,
+      appointmentId,
+      symptoms,
+      diagnosis,
+    });
+
     await record.save();
 
     res.status(201).json({
-      message: "Medical record created successfully",
-      data: record
+      message: "Medical record created",
+      record,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+
 
 // Get all records
 exports.getAllRecords = async (req, res) => {

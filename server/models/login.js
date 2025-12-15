@@ -4,15 +4,13 @@ const loginSchema = new mongoose.Schema(
   {
     userId: {
       type: Number,
-      unique: true,
-      required: true,
+            required: true,
     },
 
     username: {
       type: String,
       required: true,
-      unique: true,
-    },
+          },
 
     password: {
       type: String,

@@ -22,12 +22,14 @@ exports.addPatient = async (req, res) => {
 // GET all patients
 exports.getAllPatients = async (req, res) => {
   try {
-    const patients = await Patient.find().populate("userId");
+    const patients = await Patient.find();
     res.status(200).json(patients);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch patients" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // GET patient by ID
 exports.getPatientById = async (req, res) => {
@@ -42,3 +44,23 @@ exports.getPatientById = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch patient" });
   }
 };
+
+
+exports.getPatientByUserId = async (req, res) => {
+  try {
+    const patient = await Patient.findOne(
+      { userId: req.params.userId },
+      { patientId: 1 }
+    );
+
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+
+    res.json({ success: true, patient });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+

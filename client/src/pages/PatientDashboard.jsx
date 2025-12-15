@@ -1,46 +1,49 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import logout from "../assets/image/logout.png"
+import { useNavigate,Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
+import Patientsidebar from'../components/Patientsidebar';
 
 export default function PatientDashboard() {
   const navigate = useNavigate();
-
+  const { user } = useContext(AuthContext);
+ 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <>
+  {/* Sidebar */}
+  <Patientsidebar />
+
+  {/* Page Layout */}
+  <div className="flex min-h-screen bg-gray-100">
+    
+    {/* Spacer for fixed sidebar width */}
+    <div className="w-72"></div>  {/* adjust if sidebar width differs */}
+
+    {/* Main Content */}
+    <div className="flex-1 flex justify-center items-center p-6">
       
-      {/* Header */}
-      <div className="bg-white shadow-md p-4 rounded-xl mb-6 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-700">Patient Dashboard</h1>
-        <button
-          onClick={() => navigate("/")}
-          className="text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
-        >
-          <img src={logout}></img>
-        </button>
+      {/* Welcome Card */}
+      <div
+        className="bg-white/70 backdrop-blur-md 
+                   p-6 md:p-10 
+                   rounded-2xl shadow-xl 
+                   text-center 
+                   max-w-xl w-full
+                   bg-[url('/src/assets/image/back.jpg')] bg-cover bg-center"
+      >
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-yellow-600 drop-shadow-md">
+          Welcome, {user?.username}
+        </h1>
+<br></br>
+        <p className="mt-4 text-sm sm:text-base md:text-lg text-gray-700">
+          “There is one consolation in being sick; and that is the possibility that you may recover to a better state than you were ever in before.” 
+        </p>
       </div>
 
-      {/* Main Sections */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        {/* Card 1 */}
-        <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-          <h2 className="text-xl font-semibold mb-2 text-blue-600">My Appointments</h2>
-          <p className="text-gray-600">View your upcoming and past hospital appointments.</p>
-        </div>
-
-        {/* Card 2 */}
-        <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-          <h2 className="text-xl font-semibold mb-2 text-blue-600">Medical Reports</h2>
-          <p className="text-gray-600">Check your lab reports, medical history, and prescriptions.</p>
-        </div>
-
-        {/* Card 3 */}
-        <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-          <h2 className="text-xl font-semibold mb-2 text-blue-600">Book Appointment</h2>
-          <p className="text-gray-600">Schedule a new appointment with a doctor.</p>
-        </div>
-
-      </div>
     </div>
+  </div>
+</>
+
   );
 }

@@ -33,6 +33,10 @@ const patientSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    gender:{
+type:String,
+required:true
+    },
 
     dob: {
       type: Date

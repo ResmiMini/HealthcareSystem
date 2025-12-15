@@ -5,15 +5,25 @@ const Appointment = require("../models/Appointment");
 
 exports.bookAppointment = async (req, res) => {
   try {
-    const { appointmentId, patientId, doctorId, date,reason } = req.body;
+    const { patientId, doctorId,date,} = req.body;
+    console.log("Received data:", req.body); 
+
+    // 1️⃣ Generate appointment ID
+        const lastAppointment = await Appointment.findOne().sort({ createdAt: -1 });
+    
+        let newId = "AP001";
+    
+        if (lastAppointment) {
+          const lastNum = parseInt(lastAppointment.appointmentId.replace("AP", ""));
+          newId = "AP" + String(lastNum + 1).padStart(3, "0");
+        }
 
     const newAppointment = new Appointment({
-      appointmentId,
+      appointmentId:newId,
       patientId,
       doctorId,
-      date,
-      reason
-    });
+            date,
+          });
 
     await newAppointment.save();
 
@@ -32,22 +42,55 @@ exports.bookAppointment = async (req, res) => {
 
 exports.getAppointmentsByPatientId = async (req, res) => {
   try {
-    const { patientId } = req.params;  // P1001
+    const { patientId } = req.params;
 
-    const appointments = await Appointment.find({ patientId });
+    const appointments = await Appointment.find({ patientId })
+      .populate("doctorId", "name")   // ← fetch only doctor name
+      .sort({ date: 1 });
+
+    res.json({ appointments });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+//appoint by doctor
+exports.getAppointmentsByDoctorId = async (req, res) => {
+  try {
+    const doctorId = req.params.doctorId;
+
+    const appointments = await Appointment.find({ doctorId });
 
     if (appointments.length === 0) {
-      return res.status(404).json({ message: "No appointments found for this patient" });
+      return res.status(404).json({ message: "No appointments found" });
     }
 
-    res.status(200).json({
-      patientId,
-      totalAppointments: appointments.length,
-      appointments
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.json({ appointments });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
 
+
+exports.deleteAppointmentById = async (req, res) => {
+  try {
+    const { appointmentId } = req.params;
+
+    const deleted = await Appointment.findOneAndDelete({ appointmentId });
+
+    if (!deleted) {
+      return res.status(404).json({
+        message: "Appointment not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Appointment deleted successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
