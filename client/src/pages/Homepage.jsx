@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../components/Footer";
 import StatsSection from "../components/StatsSection";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import whitelogo from"../assets/image/whitelogo.png"
 import Department from "../components/Department";
 
