@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import axios from "axios";
-import AdminSidebar from "../components/AdminSidebar";
+import AdminSidebar from "../components/Adminsidebar";
 
 export default function AddMedicine() {
   const [name, setName] = useState("");
