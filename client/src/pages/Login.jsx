@@ -31,7 +31,7 @@ export default function Login() {
     if (role === "patient") {
       console.log("reached");
       const patientRes = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/patient/getByUserId/${userId}`
+        `${import.meta.env.VITE_API_URL}/api/patient/getByuserId/${userId}`
       );
       localStorage.setItem(
         "patientId",
