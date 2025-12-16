@@ -22,7 +22,7 @@ const patientId = localStorage.getItem("patientId");
 
   // Load Departments
   useEffect(() => {
-    axios.get("${import.meta.env.VITE_API_URL}/api/doctor/department")
+    axios.get(`${import.meta.env.VITE_API_URL}/api/doctor/department`)
       .then(res => setDepartments(res.data.specializations))
       .catch(err => console.error(err));
   }, []);
@@ -46,7 +46,7 @@ const patientId = localStorage.getItem("patientId");
     }
 //console.log(patientId);
     try {
-      const res = await axios.post("${import.meta.env.VITE_API_URL}/api/appointment/bookappointment", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/bookappointment`, {
         patientId,
         doctorId: selectedDoctor,
         date: selectedDate,

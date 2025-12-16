@@ -59,7 +59,7 @@ export default function RegisterForm() {
 
   try {
     // 1️⃣ Save Login Credentials
-    const loginRes = await axios.post("${import.meta.env.VITE_API_URL}/api/login/addlogin", {
+    const loginRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/login/addlogin`, {
       username: formData.username,
       password: formData.password,
       role: "patient"
@@ -82,7 +82,7 @@ export default function RegisterForm() {
       userId: loginId
     };
 
-    await axios.post("${import.meta.env.VITE_API_URL}/api/patient/addpatient", patientData);
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/patient/addpatient`, patientData);
 
     alert("Patient Registered Successfully!");
     navigate("/login");

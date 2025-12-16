@@ -16,7 +16,7 @@ export default function AddMedicine() {
 
   try {
     const res = await axios.post(
-      "${import.meta.env.VITE_API_URL}/api/medicine/addmedicine",
+      `${import.meta.env.VITE_API_URL}/api/medicine/addmedicine`,
       {
         name,
         category,

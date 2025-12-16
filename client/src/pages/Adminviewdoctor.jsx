@@ -12,7 +12,7 @@ export default function Adminviewdoctor() {
   }, []);
 
   const fetchDoctors = async () => {
-    const res = await axios.get("${import.meta.env.VITE_API_URL}/api/doctor/alldoctors");
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/doctor/alldoctors`);
     setDoctors(res.data);
   };
 
