@@ -52,7 +52,7 @@ exports.getPatientById = async (req, res) => {
 exports.getPatientByUserId = async (req, res) => {
   try {
     const patient = await Patient.findOne(
-      { userId: Numberreq.params.userId },
+      { userId: req.params.userId},
       { patientId: 1 }
     );
 

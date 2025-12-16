@@ -77,6 +77,7 @@ export default function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full p-2 border rounded-md"
+              required
             />
             <input
               type="password"
@@ -84,6 +85,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border rounded-md"
+              required
             />
 
             <button
