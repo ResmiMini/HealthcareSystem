@@ -43,7 +43,7 @@ export default function DoctorRegistration() {
 
     try {
       // 1️⃣ Create Login
-      const loginRes = await axios.post("${import.meta.env.VITE_API_URL}/api/login/addlogin", {
+      const loginRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/login/addlogin`, {
         username: form.username,
         password: form.password,
         role: "doctor",
@@ -66,7 +66,7 @@ console.log(userId);
 
 console.log(resume);
       // 3️⃣ Save doctor
-      const res = await axios.post("${import.meta.env.VITE_API_URL}/api/doctor/addDoctor",data,
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/doctor/addDoctor`,data,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }

@@ -24,7 +24,7 @@ export default function Payment() {
     setTimeout(async () => {
       try {
         console.log({ appointmentId, patientId, amount, method });
-        await axios.post("${import.meta.env.VITE_API_URL}/api/payment/savepayment", {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/savepayment`, {
           appointmentId,
           patientId,
           amount,
