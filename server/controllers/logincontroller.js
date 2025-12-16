@@ -13,7 +13,7 @@ exports.addlogin = async (req, res) => {
       });
     }
 if (user.password !== password) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials agsin" });
     }
 
     //Doctor approval check

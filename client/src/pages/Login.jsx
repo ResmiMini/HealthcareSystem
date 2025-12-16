@@ -29,6 +29,7 @@ export default function Login() {
     const { role, userId } = res.data.user;
 
     if (role === "patient") {
+      console.log("reached");
       const patientRes = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/patient/getByUserId/${userId}`
       );
@@ -53,7 +54,7 @@ export default function Login() {
     }
 
   } catch (error) {
-    console.log("LOGIN ERROR 👉", error.response);
+    console.log("LOGIN ERROR ", error.response);
 
     setMessage(
       error.response?.data?.message ||
