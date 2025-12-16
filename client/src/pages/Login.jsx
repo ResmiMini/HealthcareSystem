@@ -96,7 +96,7 @@ export default function Login() {
             <p>
               Don’t have an account?{" "}
               <Link to="/register" className="text-blue-600 hover:underline">
-                Register here
+                Register here(only patients ca register here)
               </Link>
             </p>
 
