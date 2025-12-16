@@ -19,6 +19,9 @@ exports.addPatient = async (req, res) => {
   }
 };
 
+
+
+
 // GET all patients
 exports.getAllPatients = async (req, res) => {
   try {
@@ -49,7 +52,7 @@ exports.getPatientById = async (req, res) => {
 exports.getPatientByUserId = async (req, res) => {
   try {
     const patient = await Patient.findOne(
-      { userId: req.params.userId },
+      { userId: Numberreq.params.userId },
       { patientId: 1 }
     );
 
