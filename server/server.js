@@ -9,11 +9,14 @@ const connectDB = require("./config/db");
 
 app.use(express.json());
 app.use(cors());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ✅ Routes
 // const authRoutes = require("./routes/authRoutes");
 // app.use("/api/patient", authRoutes);
+console.log("🔥 BACKEND SERVER STARTED");
 
 app.use(async (req, res, next) => {
   try {

@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Footer from "../components/Footer";
 import StatsSection from "../components/StatsSection";
 import Navbar from "../components/Navbar";
-import whitelogo from"../assets/image/whitelogo.png"
+// import whitelogo from"../assets/image/whitelogo.png"
 import Department from "../components/Department";
 
 const HomePage = () => {
@@ -48,24 +50,30 @@ const HomePage = () => {
     </div>
 
     {/* RIGHT BUTTONS */}
-    <div className="flex flex-col sm:flex-row items-center gap-4">
-      <button
-        className="flex items-center gap-2 bg-white text-black 
-                   font-semibold px-6 py-3 rounded-full shadow-md
-                   hover:bg-yellow-700 hover:text-white transition-all"
-      >
-        Contact Us <span className="text-lg">✙</span>
-      </button>
+    
+<div className="flex flex-col sm:flex-row items-center gap-4">
+  <Link
+    to="/contact"
+    className="w-[200px] flex justify-center items-center gap-2
+               bg-white text-black font-semibold
+               px-6 py-3 rounded-full shadow-md
+               hover:bg-yellow-700 hover:text-white
+               transition-all duration-300"
+  >
+    Contact Us <span className="text-lg">✙</span>
+  </Link>
 
-      <button
-        className="flex items-center gap-2 bg-white text-black 
-                   font-semibold px-6 py-3 rounded-full shadow-md
-                   hover:bg-yellow-700 hover:text-white transition-all"
-      >
-        Appointment <span className="text-lg">✙</span>
-      </button>
-    </div>
-
+  <Link
+    to="/login"
+    className="w-[200px] flex justify-center items-center gap-2
+               bg-white text-black font-semibold
+               px-6 py-3 rounded-full shadow-md
+               hover:bg-yellow-700 hover:text-white
+               transition-all duration-300"
+  >
+    Appointment <span className="text-lg">✙</span>
+  </Link>
+</div>
   </div>
 </div>
 

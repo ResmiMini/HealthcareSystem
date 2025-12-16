@@ -21,11 +21,11 @@ export default function Navbar() {
         <img
           src={Logo}
           alt="Logo"
-          className="w-20 h-20 rounded-lg shadow-lg object-cover"
+          className="w-30 h-[3cm] rounded-lg shadow-lg object-cover"
         />
 
         {/* Title */}
-        <p className="hidden md:block text-xl text-white text-center">
+        <p className="hidden md:block text-l text-white text-center">
           your health our responsibility
         </p>
 

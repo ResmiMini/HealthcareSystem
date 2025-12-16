@@ -21,7 +21,7 @@ export default function DoctorDashboard() {
           md:ml-72
         "
       >
-        <div className="bg-white/70 backdrop-blur-md p-6 md:p-10 rounded-2xl shadow-xl text-center max-w-xl w-full">
+        <div className="bg-white/70 backdrop-blur-md p-6 md:p-10 rounded-2xl shadow-xl text-center">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-yellow-600 drop-shadow-md">
             Welcome, Dr. {user?.username}
           </h1>

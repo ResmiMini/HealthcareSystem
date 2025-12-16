@@ -22,7 +22,7 @@ export default function Docsidebar()
         </div>
 
         {/* Menu Items */}
-        <nav className="space-y-3">
+        <nav className="space-y-7">
           <Link
             to="/doctordashboard"
             className="block py-2 px-3 rounded-lg  bg-[#0097A0] hover:bg-yellow-600"

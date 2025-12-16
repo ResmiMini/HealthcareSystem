@@ -10,7 +10,7 @@ export default function Docsidebar()
     return(
         <>
         {/* -------- Sidebar -------- */}
-      <aside className="w-64 bg-gray shadow-md fixed h-full p-6">
+      <aside className="w-64 bg-gray shadow-md   p-6">
         <h2 className="text-2xl font-bold text-yellow-600 mb-4">
          patient panel
         </h2>
@@ -22,9 +22,9 @@ export default function Docsidebar()
         </div>
 
         {/* Menu Items */}
-        <nav className="space-y-3">
+        <nav className="space-y-7">
           <Link
-            to="/doctordashboard"
+            to="/patientdashboard"
             className="block py-2 px-3 rounded-lg  bg-[#0097A0] hover:bg-yellow-600"
           >
             Dashboard
@@ -42,13 +42,19 @@ export default function Docsidebar()
           >
             Reports
           </Link>
-
+<Link
+            to="/patientmedicine"
+            className="block py-2 px-3 rounded-lg bg-[#0097A0] hover:bg-yellow-600"
+          >
+           My medicine
+          </Link>
           <Link
             to="/doctor/profile"
             className="block py-2 px-3 rounded-lg bg-[#0097A0] hover:bg-yellow-600"
           >
             payment
           </Link>
+          
         </nav>
 
         

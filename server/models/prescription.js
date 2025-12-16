@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
 const medicineSchema = new mongoose.Schema({
-  name: String,
+    medicineId:{type: String,required:true},
   dosage: String,
   frequency: String,
-  duration: Number
 });
 
 const prescriptionSchema = new mongoose.Schema({
@@ -19,9 +18,7 @@ const prescriptionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  disease: String,
   medicines: [medicineSchema],
-  notes: String
 });
 
 //  Auto-generate ID before saving

@@ -33,14 +33,19 @@ export default function DoctorConsult() {
     diagnosis: "",
     medicines: [
       {
-        category: "",
-        medicine: "",
+        category: "", 
+        medicineId:"",
         dosage: "",
-        duration: "",
+        frequency: "",
       },
     ],
   });
 
+  const cleanedMedicines = form.medicines.map(m => ({
+  medicineId: m.medicineId,
+  dosage: m.dosage,
+  frequency: Number(m.frequency),
+}));
   // Fetch medicines
   useEffect(() => {
     const fetchMedicines = async () => {
@@ -73,7 +78,7 @@ export default function DoctorConsult() {
       ...form,
       medicines: [
         ...form.medicines,
-        { category: "", medicine: "", dosage: "", duration: "" },
+        { category: "",medicineId: "", dosage: "", frequency: "" },
       ],
     });
   };
@@ -96,12 +101,17 @@ export default function DoctorConsult() {
       symptoms: form.symptoms,
       diagnosis: form.diagnosis,
     });
-
+console.log("FORM medicines:", form.medicines);
+console.log("CLEAN medicines:", cleanedMedicines);
+console.log(
+  "🚀 POSTING TO:",
+  `${import.meta.env.VITE_API_URL}/api/prescriptions/addprescription`
+);
     await axios.post(`${import.meta.env.VITE_API_URL}/api/prescriptions/addprescription`, {
       patientId: patient.patientId,
       doctorId: localStorage.getItem("doctorId"),
       appointmentId:appointmentId,
-      medicines: form.medicines,
+      medicines: cleanedMedicines,
     });
 
     alert("Medical record & prescription saved successfully");
@@ -207,15 +217,15 @@ export default function DoctorConsult() {
 
                       <td className="border p-2">
                         <select
-                          name="medicine"
-                          value={med.medicine}
+                          name="medicineId"
+                          value={med.medicineId}
                           onChange={(e) => handleMedicineChange(index, e)}
                           className="w-full border p-1 rounded"
                           disabled={!med.category}
                         >
                           <option value="">Select</option>
                           {filtered.map((m) => (
-                            <option key={m.medicineId} value={m.name}>
+                            <option key={m.medicineId} value={m.medicineId}>
                               {m.name}
                             </option>
                           ))}
@@ -234,10 +244,10 @@ export default function DoctorConsult() {
 
                       <td className="border p-2">
                         <input
-                          name="duration"
+                          name="frequency"
                           type="number"
                           placeholder="Days"
-                          value={med.duration}
+                          value={med.frequency}
                           onChange={(e) => handleMedicineChange(index, e)}
                           className="border p-1 rounded w-full"
                         />

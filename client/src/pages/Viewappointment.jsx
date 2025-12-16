@@ -54,20 +54,14 @@ export default function Viewappointment() {
 
   return (
     <>
-  {/* Sidebar */}
-  <Patientsidebar />
+ <div className="flex min-h-screen bg-[url('/src/assets/image/back.jpg')]  py-2 px-4 mx-10 ">
+     <Patientsidebar />
 
-  {/* Page Layout */}
-  <div className="flex min-h-screen bg-gray-100">
-    
-    {/* Sidebar Spacer (must match sidebar width) */}
-    <div className="w-72"></div> {/* change to w-64 if needed */}
-
-    {/* Main Content */}
+<div className="flex-1 flex justify-center items-center p-4">   
+  
     <div className="flex-1 p-8">
       
-      {/* Page Title */}
-      <h2 className="font-bold text-2xl mb-6 text-gray-800">
+            <h2 className="font-bold text-2xl mb-6 text-gray-800 text-center">
         My Appointments
       </h2>
 
@@ -121,7 +115,7 @@ export default function Viewappointment() {
 
         </div>
       </div>
-
+</div>
     </div>
   </div>
 </>

@@ -99,7 +99,7 @@ export default function Login() {
             <p>
               Don’t have an account?{" "}
               <Link to="/register" className="text-blue-600 hover:underline">
-                Register here(only patients ca register here)
+                Register here(only patients can register here)
               </Link>
             </p>
 
@@ -107,6 +107,12 @@ export default function Login() {
               By clicking Login, I accept the Terms & Conditions & Privacy
               Policy
             </p>
+            <p
+  className="text-sm text-blue-600 text-center cursor-pointer hover:underline"
+  onClick={() => navigate("/resetpassword")}
+>
+  Forgot Password?
+</p>
           </form>
 
           {message && <p className="mt-4 text-center">{message}</p>}

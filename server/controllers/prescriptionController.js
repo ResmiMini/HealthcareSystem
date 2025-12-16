@@ -1,22 +1,39 @@
 const Prescription = require("../models/prescription");
 
 // Create a new prescription
-
 exports.createPrescription = async (req, res) => {
   try {
-    const prescription = new Prescription(req.body);
+    console.log("VERCEL medicines:", req.body.medicines);
+
+    const { patientId, doctorId, appointmentId, medicines } = req.body;
+
+    if (!medicines || medicines.some(m => !m.medicineId)) {
+      return res.status(400).json({ message: "Medicine ID missing" });
+    }
+
+    const prescription = new Prescription({
+      patientId,
+      doctorId,
+      appointmentId,
+      medicines
+    });
+
     await prescription.save();
 
     res.status(201).json({
-      message: "Prescription created successfully",
-      data: prescription
+      message: "Prescription created",
+      prescription
     });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    console.error("Prescription error:", err);
+    res.status(500).json({ message: err.message });
   }
 };
 
-// Get all prescriptions
+
+
+
+//  Get all prescriptions
 exports.getAllPrescriptions = async (req, res) => {
   try {
     const prescriptions = await Prescription.find();

@@ -10,6 +10,19 @@ export default function AppointmentPage() {
   const [departments, setDepartments] = useState([]);
   const [doctors, setDoctors] = useState([]);
 
+
+  const [minDate, setMinDate] = useState("");
+  const [maxDate, setMaxDate] = useState("");
+
+  useEffect(() => {
+    const today = new Date();
+    const max = new Date();
+    max.setDate(today.getDate() + 30);
+
+    setMinDate(today.toISOString().split("T")[0]);
+    setMaxDate(max.toISOString().split("T")[0]);
+  }, []);
+
   const [selectedDept, setSelectedDept] = useState("");
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -59,7 +72,7 @@ const patientId = localStorage.getItem("patientId");
   state: {
     appointmentId: res.data.appointment.appointmentId,
     patientId,
-    amount: 500
+    amount: 200
   }
 });
     }, 1500);
@@ -76,13 +89,12 @@ const patientId = localStorage.getItem("patientId");
 
   return (
   <>
-  <Patientsidebar />
+   
 
-<div className="min-h-screen bg-gray-100 bg-[url('/src/assets/image/back.jpg')] 
-                bg-cover bg-center px-4 py-10 md:ml-64">
-  
-  <div className="flex justify-center items-start">
-    
+<div className="flex min-h-screen bg-[url('/src/assets/image/back.jpg')]  py-2 px-4 mx-10 ">
+     <Patientsidebar />
+
+<div className="flex-1 flex justify-center items-center p-4">    
     <div className="bg-white shadow-2xl rounded-2xl 
                     w-full max-w-md sm:max-w-lg 
                     p-6 sm:p-8">
@@ -128,15 +140,31 @@ const patientId = localStorage.getItem("patientId");
         ))}
       </select>
 
-      {/* Date */}
+<div className="flex flex-col gap-2">
+      <label className="font-semibold">Select Appointment Date</label>
       <input
         type="date"
+        min={minDate}
+        max={maxDate}
         className="w-full p-2.5 border rounded-lg mb-6
                    focus:outline-none focus:ring-2 
                    focus:ring-[#0097A0]"
         value={selectedDate}
         onChange={(e) => setSelectedDate(e.target.value)}
       />
+    </div>
+
+
+
+      {/* Date
+      <input
+        type="date"
+        className="w-full p-2.5 border rounded-lg mb-6 ru
+                   focus:outline-none focus:ring-2 
+                   focus:ring-[#0097A0]"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+      /> */}
 
       {/* Button */}
       <button

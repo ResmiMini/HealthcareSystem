@@ -3,7 +3,15 @@ const router = express.Router();
 const controller = require("../controllers/prescriptionController");
 
 // CRUD
-router.post("/addprescription", controller.createPrescription);
+// router.post("/addprescription", controller.createPrescription);
+router.post(
+  "/addprescription",
+  (req, res, next) => {
+    console.log("🔥 /addprescription route HIT");
+    next();
+  },
+  controller.createPrescription
+);
 router.get("/", controller.getAllPrescriptions);
 router.get("/:id", controller.getPrescriptionById);
 router.put("/:id", controller.updatePrescription);

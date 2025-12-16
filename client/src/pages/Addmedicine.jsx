@@ -38,10 +38,10 @@ export default function AddMedicine() {
  
 
   return (
-    <div className="flex bg-[url('/src/assets/image/back.jpg')]">
+    <div className="flex bg-[url('/src/assets/image/back.jpg')] py-2 px-5 mx-10 ">
       <AdminSidebar />
       <br></br>
-      <div className="p-6 flex-1 flex justify-center flex start ">
+      <div className="p-[3cm] flex-1 flex justify-center flex start ">
   {/* Card */}
   <div className="w-full max-w-md border border-gray-300 rounded-xl shadow-md bg-white p-6">
     
@@ -49,17 +49,17 @@ export default function AddMedicine() {
       Add Medicine
     </h2>
 
-    <div className="space-y-4">
+    <div className="space-y-6">
       <input
         type="text"
         placeholder="Medicine Name"
         onChange={(e) => setName(e.target.value)}
-        className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className=" border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       <select
   onChange={(e) => setCategory(e.target.value)}
-  className="w-full border border-gray-300 p-2 rounded
+  className=" border border-gray-300 p-2 rounded
              focus:outline-none focus:ring-2 focus:ring-blue-500"
 >
   <option value="">Select Medicine Type</option>

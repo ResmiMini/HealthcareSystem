@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import Patientsidebar from'../components/Patientsidebar';
+import Footer from "../components/Footer";
 
 export default function PatientDashboard() {
   const navigate = useNavigate();
@@ -11,17 +12,13 @@ export default function PatientDashboard() {
  
   return (
     <>
-  {/* Sidebar */}
-  <Patientsidebar />
-
-  {/* Page Layout */}
-  <div className="flex min-h-screen bg-gray-100">
-    
+  
+  <div className="flex min-h-screen bg-[url('/src/assets/image/back.jpg')]  py-2 px-4 mx-10 ">
+     <Patientsidebar />
     {/* Spacer for fixed sidebar width */}
-    <div className="w-72"></div>  {/* adjust if sidebar width differs */}
-
+    
     {/* Main Content */}
-    <div className="flex-1 flex justify-center items-center p-6">
+    <div className="flex-1 flex justify-center items-center p-4">
       
       {/* Welcome Card */}
       <div
@@ -43,6 +40,7 @@ export default function PatientDashboard() {
 
     </div>
   </div>
+  <Footer/>
 </>
 
   );

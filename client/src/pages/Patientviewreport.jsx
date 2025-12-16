@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import axios from "axios";
 import Patientsidebar from "../components/Patientsidebar";
+import Footer from "../components/Footer";
 
 export default function Patientviewreports() {
   const [reports, setReports] = useState([]);
@@ -31,53 +32,51 @@ export default function Patientviewreports() {
 
   return (
     <>
-      <Patientsidebar />
+    <div className="flex min-h-screen bg-[url('/src/assets/image/back.jpg')] py-4 px-4 mx-10 gap-6">
+  {/* Sidebar */}
+  <Patientsidebar />
 
-      <div className="ml-72 p-6 min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6">
-          My Medical Reports
-        </h2>
+  {/* Main Content */}
+  <div className="flex-1 flex flex-col items-center ">
+    
+    {/* Page Title */}
+    <h2 className="text-2xl font-bold mb-6 text-gray-800">
+      My Medical Reports
+    </h2>
 
-        {error && (
-          <p className="text-red-500 mb-4">{error}</p>
-        )}
+    {/* Table Card */}
+    <div className="bg-white rounded-xl shadow p-6 w-full max-w-4xl overflow-x-auto">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-200 text-left">
+            <th className="border p-3">Doctor</th>
+            <th className="border p-3">Diagnosis</th>
+          </tr>
+        </thead>
 
-        <div className="bg-white rounded-xl shadow p-4 overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-200">
-                                <th className="border p-3">Doctor</th>
-                <th className="border p-3">Diagnosis</th>
-                              </tr>
-            </thead>
+        <tbody>
+          {reports.length === 0 ? (
+            <tr>
+              <td colSpan="2" className="text-center p-6 text-gray-500">
+                No medical reports found
+              </td>
+            </tr>
+          ) : (
+            reports.map((r, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="border p-3">{r.doctorId}</td>
+                <td className="border p-3">{r.diagnosis}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
 
-            <tbody>
-              {reports.length === 0 ? (
-                <tr>
-                  <td colSpan="4" className="text-center p-4">
-                    No medical reports found
-                  </td>
-                </tr>
-              ) : (
-                reports.map((r, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    
-                    <td className="border p-3">
-                      {r.doctorId}
-                    </td>
+  </div>
+</div>
 
-                    <td className="border p-3">
-                      {r.diagnosis}
-                    </td>
-
-                    
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <Footer/>
     </>
   );
 }
