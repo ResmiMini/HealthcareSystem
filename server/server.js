@@ -69,8 +69,5 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
-    app.listen(process.env.PORT || 5000, () =>
-      console.log("✅ Server running")
-    );
-  })
+        })
   .catch((err) => console.log(err));
