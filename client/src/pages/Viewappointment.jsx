@@ -14,14 +14,14 @@ export default function Viewappointment() {
   const fetchAppointments = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/appointment/viewappointment/${patientId}`
+        `${import.meta.env.VITE_API_URL}/api/appointment/viewappointment/${patientId}`
       );
       const appts = res.data.appointments;
       const updatedAppointments = await Promise.all(
   appts.map(async (appt) => {
     try {
       const doctorRes = await axios.get(
-        `http://localhost:5000/api/doctor/getByDoctorId/${appt.doctorId}`
+        `${import.meta.env.VITE_API_URL}/api/doctor/getByDoctorId/${appt.doctorId}`
       );
       return {
         ...appt,
@@ -44,7 +44,7 @@ export default function Viewappointment() {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/appointment/deleteappointment/${appointmentId}`
+        `${import.meta.env.VITE_API_URL}/api/appointment/deleteappointment/${appointmentId}`
       );
             fetchAppointments();
     } catch (err) {

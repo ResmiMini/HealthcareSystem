@@ -16,7 +16,7 @@ export default function DoctorviewReports() {
       setRecords([]);
 
       const res = await axios.get(
-        `http://localhost:5000/api/medicalrecord/patientreport/${patientId}`
+        `${import.meta.env.VITE_API_URL}/api/medicalrecord/patientreport/${patientId}`
       );
 
       setRecords(res.data);

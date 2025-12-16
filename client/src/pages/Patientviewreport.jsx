@@ -14,7 +14,7 @@ export default function Patientviewreports() {
     const fetchReports = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/medicalrecord/patientreport/${patientId}`
+          `${import.meta.env.VITE_API_URL}/api/medicalrecord/patientreport/${patientId}`
         );
         setReports(res.data);
       } catch (err) {

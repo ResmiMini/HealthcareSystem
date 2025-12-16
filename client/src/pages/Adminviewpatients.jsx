@@ -11,7 +11,7 @@ const navigate = useNavigate();
   useEffect(() => {
     const fetchPatients = async () => {
       const res = await axios.get(
-        "http://localhost:5000/api/patient/allpatient"
+        "${import.meta.env.VITE_API_URL}/api/patient/allpatient"
       );
       setPatients(res.data);
     };

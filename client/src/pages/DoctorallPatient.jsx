@@ -20,7 +20,7 @@ export default function DoctorallPatient() {
     const fetchAppointments = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/appointment/getByDoctorId/${doctorId}`
+          `${import.meta.env.VITE_API_URL}/api/appointment/getByDoctorId/${doctorId}`
         );
         setAppointments(res.data.appointments);
       } catch (err) {

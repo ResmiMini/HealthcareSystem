@@ -14,7 +14,7 @@ export default function DoctorConsult() {
     const fetchPatient = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/patient/getByPatientId/${patientId}`
+          `${import.meta.env.VITE_API_URL}/api/patient/getByPatientId/${patientId}`
         );
         setPatient(res.data);
       } catch (err) {
@@ -44,7 +44,7 @@ export default function DoctorConsult() {
   // Fetch medicines
   useEffect(() => {
     const fetchMedicines = async () => {
-      const res = await axios.get("http://localhost:5000/api/medicine/getallmedicine");
+      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/medicine/getallmedicine");
       setMedicines(res.data);
 
       const uniqueCategories = [
@@ -89,7 +89,7 @@ export default function DoctorConsult() {
 
   try {
     console.log("appointmentId before POST:", appointmentId);
-    await axios.post("http://localhost:5000/api/medicalrecord/addmedicalrecord", {
+    await axios.post("${import.meta.env.VITE_API_URL}/api/medicalrecord/addmedicalrecord", {
       patientId: patient.patientId,
       doctorId: localStorage.getItem("doctorId"),
       appointmentId:appointmentId,
@@ -97,7 +97,7 @@ export default function DoctorConsult() {
       diagnosis: form.diagnosis,
     });
 
-    await axios.post("http://localhost:5000/api/prescriptions/addprescription", {
+    await axios.post("${import.meta.env.VITE_API_URL}/api/prescriptions/addprescription", {
       patientId: patient.patientId,
       doctorId: localStorage.getItem("doctorId"),
       appointmentId:appointmentId,

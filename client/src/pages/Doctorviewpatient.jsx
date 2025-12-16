@@ -11,7 +11,7 @@ export default function DoctorViewPatient() {
     const fetchPatient = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/patient/getByPatientId/${patientId}`
+          `${import.meta.env.VITE_API_URL}/api/patient/getByPatientId/${patientId}`
         );
         setPatient(res.data);
       } catch (err) {

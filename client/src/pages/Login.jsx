@@ -18,7 +18,7 @@ export default function Login() {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/login/login",
+      "${import.meta.env.VITE_API_URL}/api/login/login",
       { username, password }
     );
 
@@ -30,7 +30,7 @@ export default function Login() {
 
     if (role === "patient") {
       const patientRes = await axios.get(
-        `http://localhost:5000/api/patient/getByUserId/${userId}`
+        `${import.meta.env.VITE_API_URL}/api/patient/getByUserId/${userId}`
       );
       localStorage.setItem(
         "patientId",
@@ -40,7 +40,7 @@ export default function Login() {
 
     } else if (role === "doctor") {
       const docRes = await axios.get(
-        `http://localhost:5000/api/doctor/getByuserId/${userId}`
+        `${import.meta.env.VITE_API_URL}/api/doctor/getByuserId/${userId}`
       );
       localStorage.setItem(
         "doctorId",

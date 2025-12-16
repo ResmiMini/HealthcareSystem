@@ -12,12 +12,12 @@ export default function Adminviewdoctor() {
   }, []);
 
   const fetchDoctors = async () => {
-    const res = await axios.get("http://localhost:5000/api/doctor/alldoctors");
+    const res = await axios.get("${import.meta.env.VITE_API_URL}/api/doctor/alldoctors");
     setDoctors(res.data);
   };
 
   const approveDoctor = async (doctorId) => {
-    await axios.put(`http://localhost:5000/api/doctor/approvedoctor/${doctorId}`);
+    await axios.put(`${import.meta.env.VITE_API_URL}/api/doctor/approvedoctor/${doctorId}`);
     setMessage("✅ Doctor approved successfully");
     setTimeout(() => setMessage(""), 3000);
     fetchDoctors();
@@ -25,7 +25,7 @@ export default function Adminviewdoctor() {
 
   const deleteDoctor = async (doctorId) => {
     if (window.confirm("Are you sure?")) {
-      await axios.delete(`http://localhost:5000/api/doctor/deletedoctor/${doctorId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/doctor/deletedoctor/${doctorId}`);
       fetchDoctors();
     }
   };
@@ -35,7 +35,7 @@ export default function Adminviewdoctor() {
     console.log("Fetching doctor 👉", doctorId);
 
     const res = await axios.get(
-      `http://localhost:5000/api/doctor/getByDoctorId/${doctorId}`
+      `${import.meta.env.VITE_API_URL}/api/doctor/getByDoctorId/${doctorId}`
     );
 
     setSelectedDoctor(res.data.doctor);
@@ -108,7 +108,7 @@ export default function Adminviewdoctor() {
 
           {selectedDoctor.resume && (
            <a
-  href={`http://localhost:5000/uploads/resumes/${selectedDoctor.resume}`}
+  href={`${import.meta.env.VITE_API_URL}/uploads/resumes/${selectedDoctor.resume}`}
   target="_blank"
   rel="noreferrer"
   className="text-blue-600 underline"
