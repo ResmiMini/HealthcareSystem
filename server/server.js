@@ -12,6 +12,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // const authRoutes = require("./routes/authRoutes");
 // app.use("/api/patient", authRoutes);
 
+
+
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running successfully");
+});
  //patient routes
  const patientroutes=require("./routes/patientroutes");
 app.use("/api/patient",patientroutes)
@@ -72,5 +77,5 @@ mongoose
         })
   .catch((err) => console.log(err));
 
-  
+
   module.exports = app;
