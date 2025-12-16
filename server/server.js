@@ -6,7 +6,7 @@ const path = require("path");
 const app = express();
 const connectDB = require("./config/db");
 
-connectDB();
+
 app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -15,7 +15,14 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // const authRoutes = require("./routes/authRoutes");
 // app.use("/api/patient", authRoutes);
 
-
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ message: "Database connection failed" });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("🚀 Backend is running successfully");
