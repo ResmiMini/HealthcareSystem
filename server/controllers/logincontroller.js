@@ -5,15 +5,18 @@ exports.addlogin = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = await Login.findOne({ username, password });
+    const user = await Login.findOne({ username});
 
     if (!user) {
       return res.status(401).json({
-        message: "Invalid username or password"
+        message: "Invalid"
       });
     }
+if (user.password !== password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
 
-    // 🔐 Doctor approval check
+    //Doctor approval check
     if (user.role === "doctor") {
       const doctor = await Doctor.findOne({
         userId: Number(user.userId)
