@@ -7,7 +7,7 @@ import Contact from './pages/Contact';
 import Register from './pages/Register';
 import HomePage from './pages/Homepage';
 import About from "./pages/About";
-import Navbar from './components/NavBar';
+import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import PatientDashboard from './pages/PatientDashboard';
 import DoctorRegistration from './pages/DoctorRegistration';
