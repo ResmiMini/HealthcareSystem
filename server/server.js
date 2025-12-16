@@ -4,6 +4,9 @@ const cors = require("cors");
 require("dotenv").config();
 const path = require("path");
 const app = express();
+const connectDB = require("./config/db");
+
+connectDB();
 app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -70,12 +73,6 @@ const labReportRoutes = require("./routes/labReportRoutes");
 app.use("/api/labreports", labReportRoutes);
 
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("✅ MongoDB Connected");
-        })
-  .catch((err) => console.log(err));
 
 
   module.exports = app;
