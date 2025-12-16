@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Adminsidebar from "../components/AdminSidebar";
+import Adminsidebar from "../components/Adminsidebar";
 
 export default function Adminviewdoctor() {
   const [message, setMessage] = useState("");
