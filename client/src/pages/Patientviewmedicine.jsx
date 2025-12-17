@@ -29,6 +29,8 @@ export default function Patientviewmedicine() {
               <th className="p-3 border text-left">Medicine</th>
               <th className="p-3 border text-left">Category</th>
               <th className="p-3 border text-left">dosage</th>
+            <th className="p-3 border text-left">frequency</th>
+
             </tr>
           </thead>
 
@@ -57,27 +59,43 @@ export default function Patientviewmedicine() {
 
       {/* Mobile Cards */}
       <div className="md:hidden mt-6 space-y-4">
-        {medicines.map((m) => (
-          <div
-            key={m.medicineId}
-            className="bg-white rounded-xl shadow-md p-4 border hover:shadow-lg transition"
-          >
-            <h2 className="text-lg font-bold text-[#03506F]">
-              {m.name}
-            </h2>
+  {medicines.map((m, index) => (
+    <div
+      key={`${m.medicineId}-${index}`}
+      className="bg-white rounded-xl shadow-md p-4 border hover:shadow-lg transition"
+    >
+      {/* Medicine Name */}
+      <h2 className="text-lg font-bold text-[#03506F]">
+        {m.name}
+      </h2>
 
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-                {m.category}
-              </span>
+      {/* Category */}
+      <span className="inline-block mt-1 text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+        {m.category}
+      </span>
 
-              <span className="text-green-600 font-bold">
-                ₹{m.price}
-              </span>
-            </div>
-          </div>
-        ))}
+      {/* Dosage & Frequency */}
+      <div className="mt-3 space-y-1 text-sm text-gray-700">
+        <p>
+          💊 <span className="font-semibold">Dosage:</span> {m.dosage}
+        </p>
+        <p>
+          ⏰ <span className="font-semibold">Frequency:</span> {m.frequency}
+        </p>
       </div>
+
+      {/* Price (Optional) */}
+      {m.price && (
+        <div className="mt-3 text-right">
+          <span className="text-green-600 font-bold">
+            ₹{m.price}
+          </span>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
 
       {/* Empty State */}
       {medicines.length === 0 && (
