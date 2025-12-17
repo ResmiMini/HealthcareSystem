@@ -21,7 +21,7 @@ app.use(
     credentials: true
   })
 );
-app.options("*", cors());
+
 
 app.use(async (req, res, next) => {
   try {
@@ -86,8 +86,6 @@ app.use("/api/payment", paymentRoutes);
 
 const labReportRoutes = require("./routes/labReportRoutes");
 app.use("/api/labreports", labReportRoutes);
-
-
 
 
   module.exports = app;
