@@ -1,5 +1,5 @@
-const Prescription = require("../models/Prescription");
-const Medicine = require("../models/Medicine");
+const Prescription = require("../models/prescription");
+const Medicine = require("../models/medicine");
 
 exports.getPatientMedicinesDetailed = async (req, res) => {
   try {
