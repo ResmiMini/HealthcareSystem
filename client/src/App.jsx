@@ -28,10 +28,8 @@ import Adminviewdoctor from './pages/Adminviewdoctor';
 import Payment from './pages/Payment';
 import Patientviewmedicine from './pages/Patientviewmedicine';
 import Doctorcomingappointment from'./pages/Doctorcomingappointment';
-// import Login from "./pages/Login";
-// import Admin from "./pages/Admin";
-// import Register from "./pages/Register";
-// import Cart from "./pages/Cart";
+import Doctorprofile from './pages/Doctorprofile';
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -57,6 +55,7 @@ function App() {
          <Route path="/doctorconsultpatient/:patientId/:appointmentId" element={<DoctorConsult/>}/>
         <Route path="/doctorallpatient" element={<DoctorallPatient/>} />
         <Route path="/doctorcomingappointments" element={<Doctorcomingappointment/>} />
+        <Route path="/doctorprofile" element={<Doctorprofile/>} />
 
 
         <Route path="/appointment" element={<DoctorRegistration/>} />
