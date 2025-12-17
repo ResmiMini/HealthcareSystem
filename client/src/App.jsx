@@ -26,6 +26,7 @@ import AddMedicine from './pages/Addmedicine';
 import Adminviewpatient from './pages/Adminviewpatients';
 import Adminviewdoctor from './pages/Adminviewdoctor';
 import Payment from './pages/Payment';
+import Patientviewmedicine from './pages/Patientviewmedicine';
 // import Login from "./pages/Login";
 // import Admin from "./pages/Admin";
 // import Register from "./pages/Register";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path="/patientdashboard" element={<PatientDashboard />} />
         <Route path="/patientviewreports" element={<Patientviewreports />} />
+        <Route path="/patientmedicine" element={<Patientviewmedicine />} />
 
 
 

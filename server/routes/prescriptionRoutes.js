@@ -19,7 +19,7 @@ router.delete("/:id", controller.deletePrescription);
 
 // Search
 
-router.get("/patient/:patientId", controller.getPrescriptionsByPatient);
+router.get("/patientviewmedicine/:patientId", controller.getPrescriptionsByPatient);
 router.get("/doctor/:doctorId", controller.getPrescriptionsByDoctor);
 
 module.exports = router;

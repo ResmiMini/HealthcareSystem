@@ -1,4 +1,52 @@
-const Prescription = require("../models/prescription");
+const Prescription = require("../models/Prescription");
+const Medicine = require("../models/Medicine");
+
+exports.getPatientMedicinesDetailed = async (req, res) => {
+  try {
+    const { patientId } = req.params;
+
+    // 1️⃣ Fetch prescriptions
+    const prescriptions = await Prescription.find({ patientId });
+
+    if (!prescriptions.length) {
+      return res.json({ medicines: [] });
+    }
+
+    // 2️⃣ Extract medicines from prescriptions
+    const prescribedMeds = prescriptions.flatMap(p => p.medicines);
+
+    // 3️⃣ Get medicine IDs
+    const medicineIds = prescribedMeds.map(m => m.medicineId);
+
+    // 4️⃣ Fetch medicine details
+    const medicineDetails = await Medicine.find({
+      medicineId: { $in: medicineIds }
+    });
+
+    // 5️⃣ Merge prescription + medicine data
+    const finalMedicines = prescribedMeds.map(pm => {
+      const med = medicineDetails.find(
+        m => m.medicineId === pm.medicineId
+      );
+
+      return {
+        medicineId: pm.medicineId,
+        name: med?.name || "Unknown",
+        category: med?.category || "N/A",
+        dosage: pm.dosage,
+        frequency: pm.frequency
+      };
+    });
+
+    res.json({
+      success: true,
+      medicines: finalMedicines
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Create a new prescription
 exports.createPrescription = async (req, res) => {
@@ -65,19 +113,52 @@ exports.getPrescriptionById = async (req, res) => {
 
 exports.getPrescriptionsByPatient = async (req, res) => {
   try {
-    const prescriptions = await Prescription.find({
-      patientId: req.params.patientId
-    });
+    const { patientId } = req.params;
 
-    if (prescriptions.length === 0) {
-      return res.status(404).json({ message: "No prescriptions found" });
+    // 1️⃣ Fetch prescriptions
+    const prescriptions = await Prescription.find({ patientId });
+
+    if (!prescriptions.length) {
+      return res.json({ medicines: [] });
     }
 
-    res.status(200).json(prescriptions);
+    // 2️⃣ Extract medicines from prescriptions
+    const prescribedMeds = prescriptions.flatMap(p => p.medicines);
+
+    // 3️⃣ Get medicine IDs
+    const medicineIds = prescribedMeds.map(m => m.medicineId);
+
+    // 4️⃣ Fetch medicine details
+    const medicineDetails = await Medicine.find({
+      medicineId: { $in: medicineIds }
+    });
+
+    // 5️⃣ Merge prescription + medicine data
+    const finalMedicines = prescribedMeds.map(pm => {
+      const med = medicineDetails.find(
+        m => m.medicineId === pm.medicineId
+      );
+
+      return {
+        medicineId: pm.medicineId,
+        name: med?.name || "Unknown",
+        category: med?.category || "N/A",
+        dosage: pm.dosage,
+        frequency: pm.frequency
+      };
+    });
+
+    res.json({
+      success: true,
+      medicines: finalMedicines
+    });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // Search prescriptions by doctorId
 

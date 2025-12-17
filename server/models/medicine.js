@@ -22,5 +22,5 @@ const medicineSchema = new mongoose.Schema({
   }
    
 },{ timestamps: true });
-
-module.exports = mongoose.model("Medicine", medicineSchema);
+module.exports =  mongoose.models.Medicine ||
+  mongoose.model("Medicine", medicineSchema);
