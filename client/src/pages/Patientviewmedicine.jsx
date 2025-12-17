@@ -56,7 +56,7 @@ export default function Patientviewmedicine() {
             </td>
 
             <td className="p-3 border font-semibold">
-              {m.frequency || "N/A"}
+              {m.frequency || "N/A"} days
             </td>
           </tr>
         ))}
