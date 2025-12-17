@@ -59,7 +59,7 @@ export default function Docsidebar()
           </Link>
 
           <Link
-            to="/doctor/profile"
+            to="/doctorprofile"
             className="block py-2 px-3 rounded-lg bg-[#0097A0] hover:bg-yellow-600"
           >
             Profile
