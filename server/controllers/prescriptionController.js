@@ -115,46 +115,48 @@ exports.getPrescriptionsByPatient = async (req, res) => {
   try {
     const { patientId } = req.params;
 
-    // 1️⃣ Fetch prescriptions
+    // 1️⃣ Get prescriptions
     const prescriptions = await Prescription.find({ patientId });
 
-    if (!prescriptions.length) {
-      return res.json({ medicines: [] });
-    }
+    // 2️⃣ Extract medicines (🔥 THIS IS CRITICAL)
+    const prescribedMedicines = prescriptions.flatMap(
+      p => p.medicines
+    );
 
-    // 2️⃣ Extract medicines from prescriptions
-    const prescribedMeds = prescriptions.flatMap(p => p.medicines);
+    // 3️⃣ Extract medicineIds
+    const medicineIds = prescribedMedicines.map(
+      m => m.medicineId
+    );
 
-    // 3️⃣ Get medicine IDs
-    const medicineIds = prescribedMeds.map(m => m.medicineId);
-
-    // 4️⃣ Fetch medicine details
-    const medicineDetails = await Medicine.find({
+    // 4️⃣ Get medicine master data
+    const medicineDocs = await Medicine.find({
       medicineId: { $in: medicineIds }
     });
 
-    // 5️⃣ Merge prescription + medicine data
-    const finalMedicines = prescribedMeds.map(pm => {
-      const med = medicineDetails.find(
+    // 5️⃣ Merge prescription + medicine master
+    const finalMedicines = prescribedMedicines.map(pm => {
+      const med = medicineDocs.find(
         m => m.medicineId === pm.medicineId
       );
 
       return {
         medicineId: pm.medicineId,
+
+        // FROM MEDICINE TABLE
         name: med?.name || "Unknown",
         category: med?.category || "N/A",
+
+        // ✅ FROM PRESCRIPTION TABLE
         dosage: pm.dosage,
         frequency: pm.frequency
       };
     });
 
-    res.json({
-      success: true,
-      medicines: finalMedicines
-    });
+    res.json({ medicines: finalMedicines });
 
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

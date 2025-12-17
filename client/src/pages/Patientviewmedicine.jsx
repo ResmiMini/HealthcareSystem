@@ -49,7 +49,7 @@ export default function Patientviewmedicine() {
                   </span>
                 </td>
                 <td className="p-3 border text-green-600 font-bold">
-                  ₹{m.price}
+                  ₹{m.dosage}
                 </td>
               </tr>
             ))}
