@@ -48,7 +48,7 @@ export default function Docsidebar()
             to="/doctorcomingappointments"
             className="block py-2 px-3 rounded-lg bg-[#0097A0] hover:bg-yellow-600"
           >
-            Schedule
+            Upcoming Appointment
           </Link>
 
           <Link
