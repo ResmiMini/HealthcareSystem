@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Patientsidebar from "../components/Patientsidebar"
 
 export default function Patientviewmedicine() {
   const [medicines, setMedicines] = useState([]);
@@ -15,16 +16,10 @@ export default function Patientviewmedicine() {
   }, []);
 
   return (
-    <div className="p-4 md:p-8">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-[#0097A0] to-[#03506F] text-white rounded-xl p-6 shadow-lg">
-        <h1 className="text-2xl md:text-3xl font-bold">
-    Prescribed Medicines
-        </h1>
-        <p className="text-sm mt-1 opacity-90">
-          View medicines prescribed by your doctor
-        </p>
-      </div>
+  <>
+    <div className="flex min-h-screen bg-[url('/src/assets/image/back.jpg')]  py-2 px-4 mx-10 ">
+         <Patientsidebar />
+      
 
       {/* Desktop Table */}
       <div className="hidden md:block mt-6 overflow-x-auto">
@@ -91,5 +86,6 @@ export default function Patientviewmedicine() {
         </div>
       )}
     </div>
+    </>
   );
 }
