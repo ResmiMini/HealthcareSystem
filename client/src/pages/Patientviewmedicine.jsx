@@ -52,7 +52,7 @@ export default function Patientviewmedicine() {
                   ₹{m.dosage}
                 </td>
                 <td className="p-3 border text-green-600 font-bold">
-                  {m.freqency}days
+                  {m.frequency}days
                 </td>
               </tr>
             ))}
