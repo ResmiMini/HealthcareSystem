@@ -22,43 +22,49 @@ export default function Patientviewmedicine() {
       
 
       {/* Desktop Table */}
-      <div className="hidden md:block mt-6 overflow-x-auto">
-        <table className="w-full border rounded-lg overflow-hidden shadow-md">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 border text-left">Medicine</th>
-              <th className="p-3 border text-left">Category</th>
-              <th className="p-3 border text-left">dosage</th>
-            <th className="p-3 border text-left">frequency</th>
+      {/* Desktop Table */}
+<div className="hidden md:flex justify-center w-full mt-10">
+  <div className="w-full max-w-5xl overflow-x-auto">
+    <table className="w-full border rounded-lg overflow-hidden shadow-md bg-white">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="p-3 border text-left">Medicine</th>
+          <th className="p-3 border text-left">Category</th>
+          <th className="p-3 border text-left">Dosage</th>
+          <th className="p-3 border text-left">Frequency</th>
+        </tr>
+      </thead>
 
-            </tr>
-          </thead>
+      <tbody>
+        {medicines.map((m, index) => (
+          <tr
+            key={`${m.medicineId}-${index}`}
+            className="hover:bg-blue-50 transition"
+          >
+            <td className="p-3 border font-semibold text-gray-800">
+              {m.name}
+            </td>
 
-          <tbody>
-            {medicines.map((m) => (
-              <tr
-                key={m.medicineId}
-                className="hover:bg-blue-50 transition"
-              >
-                <td className="p-3 border font-semibold text-gray-800">
-                  {m.name}
-                </td>
-                <td className="p-3 border">
-                  <span className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800">
-                    {m.category}
-                  </span>
-                </td>
-                <td className="p-3 border text-green-600 font-bold">
-                  ₹{m.dosage}
-                </td>
-                <td className="p-3 border text-green-600 font-bold">
-                  {m.frequency}days
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            <td className="p-3 border">
+              <span className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800">
+                {m.category}
+              </span>
+            </td>
+
+            <td className="p-3 border font-semibold">
+              {m.dosage || "N/A"}
+            </td>
+
+            <td className="p-3 border font-semibold">
+              {m.frequency || "N/A"}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
       {/* Mobile Cards */}
       <div className="md:hidden mt-6 space-y-4">
