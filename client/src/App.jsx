@@ -27,6 +27,7 @@ import Adminviewpatient from './pages/Adminviewpatients';
 import Adminviewdoctor from './pages/Adminviewdoctor';
 import Payment from './pages/Payment';
 import Patientviewmedicine from './pages/Patientviewmedicine';
+import Doctorcomingappointment from'./pages/Doctorcomingappointment';
 // import Login from "./pages/Login";
 // import Admin from "./pages/Admin";
 // import Register from "./pages/Register";

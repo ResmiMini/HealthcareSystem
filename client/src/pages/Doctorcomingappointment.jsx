@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import Docsidebar from "../components/Docsidebar";
 
-export default function DoctorAppointment() {
+export default function Doctorcomingappointment() {
       const { user } = useContext(AuthContext);
       const navigate = useNavigate();
     
