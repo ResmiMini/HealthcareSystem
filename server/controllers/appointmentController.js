@@ -57,18 +57,27 @@ exports.getAppointmentsByPatientId = async (req, res) => {
 //appoint by doctor
 exports.getAppointmentsByDoctorId = async (req, res) => {
   try {
-    const doctorId = req.params.doctorId;
+    const { doctorId } = req.params;
 
-    const appointments = await Appointment.find({ doctorId });
+    // Start & end of today
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
 
-    if (appointments.length === 0) {
-      return res.status(404).json({ message: "No appointments found" });
-    }
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
 
-    res.json({ appointments });
+    const appointments = await Appointment.find({
+      doctorId,
+      date: { $gte: startOfDay, $lte: endOfDay }
+    }).sort({ date: 1 });
 
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.json({
+      success: true,
+      appointments
+    });
+  } catch (error) {
+    console.error("❌ Today doctor appointments:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
