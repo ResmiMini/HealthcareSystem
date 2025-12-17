@@ -51,6 +51,9 @@ export default function Patientviewmedicine() {
                 <td className="p-3 border text-green-600 font-bold">
                   ₹{m.dosage}
                 </td>
+                <td className="p-3 border text-green-600 font-bold">
+                  {m.freqency}days
+                </td>
               </tr>
             ))}
           </tbody>
