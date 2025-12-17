@@ -13,10 +13,15 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ✅ Routes
-// const authRoutes = require("./routes/authRoutes");
-// app.use("/api/patient", authRoutes);
-console.log("🔥 BACKEND SERVER STARTED");
+app.use(
+  cors({
+    origin: "https://healthcare-systemfrontend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+  })
+);
+app.options("*", cors());
 
 app.use(async (req, res, next) => {
   try {

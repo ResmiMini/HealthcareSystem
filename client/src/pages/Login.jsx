@@ -19,7 +19,10 @@ export default function Login() {
   try {
     const res = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/login/login`,
-      { username, password }
+      { username, password },
+  {
+    withCredentials: true
+  }
     );
 
     localStorage.setItem("user", JSON.stringify(res.data.user));
