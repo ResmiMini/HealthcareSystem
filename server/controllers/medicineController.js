@@ -21,12 +21,12 @@ await connectDB();
       const lastNum = parseInt(
         lastMedicine.medicineId.replace("MED", "")
       );
-      MedicineId =
+      newMedicineIdedicineId =
         "MED" + String(lastNum + 1).padStart(3, "0");
     }
 
     const medicine = new Medicine({
-      MedicineId,
+      medicineId:newMedicineId,
       name,
       category,
       price
@@ -64,6 +64,7 @@ exports.getByMedicineId = async (req, res) => {
     const medicine = await Medicine.findOne({
       medicineId: req.params.medicineId
     });
+
 
     if (!medicine) {
       return res.status(404).json({
