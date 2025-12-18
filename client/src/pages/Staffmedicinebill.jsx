@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Staffsidebar from "../components/Staffsidebar";
 
-export default function StaffBilling() {
+export default function Staffmedicinebill() {
   const [patientId, setPatientId] = useState("");
   const [prescription, setPrescription] = useState(null);
   const [billItems, setBillItems] = useState([]);
@@ -26,7 +26,7 @@ export default function StaffBilling() {
       const items = await Promise.all(
         pres.medicines.map(async (m) => {
           const medRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/medicine/${m.medicineId}`
+            `${import.meta.env.VITE_API_URL}/api/medicine/getBymedicineId/${m.medicineId}`
           );
 
           return {

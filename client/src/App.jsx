@@ -30,6 +30,7 @@ import Patientviewmedicine from './pages/Patientviewmedicine';
 import Doctorcomingappointment from'./pages/Doctorcomingappointment';
 import Doctorprofile from './pages/Doctorprofile';
 import Staffdashboard from './pages/Staffdashboard';
+import Staffmedicinebill from './pages/Staffmedicinebill';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -59,6 +60,7 @@ function App() {
         <Route path="/doctorviewreports" element={<DoctorviewReports/>} />
 
         <Route path="/staffDashboard" element={<Staffdashboard/>} />
+        <Route path="/Medicinebill" element={<Staffmedicinebill/>} />
 
 
 
