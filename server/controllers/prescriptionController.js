@@ -118,7 +118,7 @@ exports.getPrescriptionsByPatient = async (req, res) => {
     // 1️⃣ Get prescriptions
     const prescriptions = await Prescription.find({ patientId });
 
-    // 2️⃣ Extract medicines (🔥 THIS IS CRITICAL)
+    // 2️⃣ Extract medicines 
     const prescribedMedicines = prescriptions.flatMap(
       p => p.medicines
     );
