@@ -16,7 +16,7 @@ export default function StaffPrescriptionDetails() {
 
       // 1️⃣ Fetch latest prescription by patientId
       const presRes = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/prescriptions/latest/${patientId}`,
+        `${import.meta.env.VITE_API_URL}/api/prescriptions/patientviewmedicine/${patientId}`,
         { headers: { "Cache-Control": "no-cache" } }
       );
 
