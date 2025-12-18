@@ -21,7 +21,7 @@ await connectDB();
       const lastNum = parseInt(
         lastMedicine.medicineId.replace("MED", "")
       );
-      newMedicineIdedicineId =
+      newMedicineId =
         "MED" + String(lastNum + 1).padStart(3, "0");
     }
 
