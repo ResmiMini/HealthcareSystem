@@ -2,11 +2,11 @@
 const bcrypt = require("bcryptjs");
 const Login = require("../models/login");
 const Doctor=require("../models/doctor");
-
+const connectDB = require("../config/db");
 exports.addlogin = async (req, res) => {
   try {
     const { username, password, role = "patient" } = req.body;
-
+ await connectDB();
     // 1️⃣ Validate input
     if (!username || !password) {
       return res.status(400).json({
