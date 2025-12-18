@@ -55,12 +55,14 @@ exports.getAllMedicines = async (req, res) => {
   }
 };
 
-// ➤ Get Medicine by ID (MongoDB _id)
+// ➤ Get Medicine by ID 
 
 exports.getByMedicineId = async (req, res) => {
+  console.log(req.params.medicineId);
+  await connectDB();
   try {
-    await connectDB();
-    console.log(req.params.medicineId);
+    
+    
     const medicine = await Medicine.findOne({
       medicineId: req.params.medicineId
     });
@@ -68,6 +70,7 @@ exports.getByMedicineId = async (req, res) => {
 
     if (!medicine) {
       return res.status(404).json({
+        
         success: false,
         message: "Medicine not found"
       });
