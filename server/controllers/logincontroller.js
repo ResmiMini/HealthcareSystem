@@ -58,6 +58,8 @@ exports.addlogin = async (req, res) => {
 exports.loginUser = async (req, res) => {
   
   try {
+    await connectDB();
+
   const { username, password } = req.body;
 
   console.log("LOGIN REQUEST:", username);
