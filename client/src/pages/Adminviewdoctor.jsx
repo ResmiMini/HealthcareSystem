@@ -108,13 +108,13 @@ export default function Adminviewdoctor() {
 
           
            <a
-  href={`${selectedDoctor.resume}?dl=true`}
- target="_blank"
+  href={`https://docs.google.com/gview?url=${encodeURIComponent(
+    selectedDoctor.resume
+  )}&embedded=true`}
+  target="_blank"
   rel="noopener noreferrer"
   className="text-blue-600 underline"
->
-  View Resume (PDF)
-</a>
+> View Resume</a>
          
         </div>
       )}
