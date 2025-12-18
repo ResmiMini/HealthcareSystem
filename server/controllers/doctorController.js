@@ -23,7 +23,7 @@ console.log(req.body.userId);
       email: req.body.email,
       qualification: req.body.qualification,
       specialization: req.body.specialization,
-      resume: req.file ? req.file.filename : null,
+      resume: req.file?.path
     });
 
     await doctor.save();

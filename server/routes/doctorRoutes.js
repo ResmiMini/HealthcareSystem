@@ -1,7 +1,7 @@
 
 const express = require("express");
 const router = express.Router();
-const upload = require("../middleware/upload");
+const upload = require("../config/multer");
 const { addDoctor,approveDoctor,deleteDoctor,getSpecializations ,getDoctorsByDepartment,getDoctorByDoctorId,getDoctorByuserId,getAllDoctors} = require("../controllers/doctorController");
 
 // router.post("/addDoctor", addDoctor);
