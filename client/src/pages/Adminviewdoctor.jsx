@@ -108,7 +108,7 @@ export default function Adminviewdoctor() {
 
           {selectedDoctor.resume && (
            <a
-  href={selectedDoctor.resume}
+  href={`${selectedDoctor.resume}?dl=true`}
  target="_blank"
   rel="noopener noreferrer"
   className="text-blue-600 underline"
