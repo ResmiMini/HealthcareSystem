@@ -46,7 +46,7 @@ export default function DoctorRegistration() {
       const loginRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/login/addlogin`, {
         username: form.username,
         password: form.password,
-        role: "doctor",
+        role: "doctor"
         
         
       });
@@ -85,6 +85,7 @@ console.log(resume);
         username: "",
         password: "",
         confirmPassword: "",
+        resume:""
       });
 
       setResume(null);
