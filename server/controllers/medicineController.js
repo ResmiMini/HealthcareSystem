@@ -75,7 +75,7 @@ exports.getByMedicineId = async (req, res) => {
     console.error("FETCH MEDICINE ERROR:", error);
     res.status(500).json({
       success: false,
-      message: "Server error"
+      message: error.message  
     });
   }
 };
