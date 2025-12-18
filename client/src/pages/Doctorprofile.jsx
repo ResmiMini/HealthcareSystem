@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Docsidebar from "../components/Docsidebar";
 
 export default function Doctorprofile() {
   const [doctor, setDoctor] = useState(null);
@@ -21,6 +22,8 @@ export default function Doctorprofile() {
   }
 
   return (
+    <>
+    <Docsidebar/>
     <div className="flex justify-center mt-10">
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-3xl">
         <h2 className="text-2xl font-bold text-[#03506F] mb-4">
@@ -48,5 +51,6 @@ export default function Doctorprofile() {
         </div>
       </div>
     </div>
+    </>
   );
 }
