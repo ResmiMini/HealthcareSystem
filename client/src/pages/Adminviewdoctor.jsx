@@ -109,8 +109,8 @@ export default function Adminviewdoctor() {
           {selectedDoctor.resume && (
            <a
   href={selectedDoctor.resume}
-  target="_blank"
-  rel="noreferrer"
+ target="_blank"
+  rel="noopener noreferrer"
   className="text-blue-600 underline"
 >
   View Resume (PDF)
