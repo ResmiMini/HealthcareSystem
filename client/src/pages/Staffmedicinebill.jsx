@@ -2,172 +2,118 @@ import React, { useState } from "react";
 import axios from "axios";
 import Staffsidebar from "../components/Staffsidebar";
 
-export default function Staffmedicinebill() {
+export default function StaffMedicinebill() {
   const [patientId, setPatientId] = useState("");
-  const [prescription, setPrescription] = useState(null);
-  const [billItems, setBillItems] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [medicineDetails, setMedicineDetails] = useState([]);
   const [error, setError] = useState("");
 
-  // Fetch prescription
-  const fetchPrescription = async () => {
+  // 🔹 Fetch prescription + medicine details
+  const fetchPrescriptionDetails = async () => {
     try {
       setError("");
-      setPrescription(null);
-      setBillItems([]);
+      setMedicineDetails([]);
 
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/prescriptions/patientviewmedicine/${patientId}`
+      // 1️⃣ Fetch latest prescription by patientId
+      const presRes = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/prescriptions/latest/${patientId}`
       );
 
-      const pres = res.data.prescription;
-      setPrescription(pres);
+      const prescription = presRes.data.prescription;
 
-      const items = await Promise.all(
-        pres.medicines.map(async (m) => {
+      // 2️⃣ For each medicineId, fetch medicine table details
+      const mergedMedicines = await Promise.all(
+        prescription.medicines.map(async (pm) => {
           const medRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/medicine/getBymedicineId/${m.medicineId}`
+            `${import.meta.env.VITE_API_URL}/api/medicine/${pm.medicineId}`
           );
 
           return {
-            medicineId: m.medicineId,
+            medicineId: pm.medicineId,
             name: medRes.data.name,
-            dosage: m.dosage,
-            frequency: m.frequency,
+            category: medRes.data.category,
             price: medRes.data.price,
-            quantity: 1,
-            total: medRes.data.price
+            dosage: pm.dosage,
+            frequency: pm.frequency
           };
         })
       );
 
-      setBillItems(items);
-      calculateTotal(items);
+      setMedicineDetails(mergedMedicines);
 
     } catch (err) {
-      setError("Prescription not found for this patient ID");
+      console.error(err);
+      setError("No prescription found for this patient ID");
     }
   };
 
-  // Update quantity
-  const updateQuantity = (index, qty) => {
-    const updated = [...billItems];
-    updated[index].quantity = qty;
-    updated[index].total = qty * updated[index].price;
-
-    setBillItems(updated);
-    calculateTotal(updated);
-  };
-
-  const calculateTotal = (items) => {
-    const sum = items.reduce((acc, item) => acc + item.total, 0);
-    setTotalAmount(sum);
-  };
-
   return (
+    <>
+      <Staffsidebar />
 
-      <>
-  <Staffsidebar />
+      <div className="ml-72 p-8 min-h-screen bg-gray-100">
+        <h1 className="text-2xl font-bold mb-6 text-[#03506F]">
+          Prescription Details
+        </h1>
 
-  <div className="ml-72 p-8 min-h-screen bg-gray-100">
-    <h1 className="text-3xl font-bold mb-8 text-[#03506F]">
-      Medicine Billing
-    </h1>
-
-    {/* Patient ID Section */}
-    <div className="bg-white p-5 rounded-xl shadow mb-8 flex items-center gap-4">
-      <input
-        type="text"
-        placeholder="Enter Patient ID"
-        value={patientId}
-        onChange={(e) => setPatientId(e.target.value)}
-        className="border p-3 rounded-md w-72 focus:outline-none focus:ring-2 focus:ring-[#03506F]"
-      />
-      <button
-        onClick={fetchPrescription}
-        className="bg-[#03506F] text-white px-6 py-3 rounded-md hover:bg-[#02394f]"
-      >
-        Fetch Prescription
-      </button>
-    </div>
-
-    {error && (
-      <p className="text-red-600 font-semibold mb-6">{error}</p>
-    )}
-
-    {/* Prescription Info */}
-    {prescription && (
-      <div className="bg-white p-5 rounded-xl shadow mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-        <p><b>Prescription ID:</b> {prescription.prescriptionId}</p>
-        <p><b>Doctor ID:</b> {prescription.doctorId}</p>
-        <p><b>Date:</b> {new Date(prescription.date).toLocaleDateString()}</p>
-      </div>
-    )}
-
-    {/* Medicines */}
-    {billItems.map((item, index) => (
-      <div
-        key={index}
-        className="bg-white rounded-xl shadow p-6 mb-6"
-      >
-        {/* Medicine Name + Line Total */}
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-[#03506F]">
-            {index + 1}. {item.name}
-          </h2>
-          <span className="text-lg font-bold text-green-600">
-            ₹{item.total}
-          </span>
+        {/* Patient ID Input */}
+        <div className="bg-white p-5 rounded-xl shadow mb-6 flex gap-4">
+          <input
+            type="text"
+            placeholder="Enter Patient ID"
+            value={patientId}
+            onChange={(e) => setPatientId(e.target.value)}
+            className="border p-3 rounded w-64"
+          />
+          <button
+            onClick={fetchPrescriptionDetails}
+            className="bg-[#03506F] text-white px-6 py-3 rounded"
+          >
+            Fetch Prescription
+          </button>
         </div>
 
-        {/* Details */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm items-end">
-          <div>
-            <p className="text-gray-500">Dosage</p>
-            <p className="font-semibold">{item.dosage}</p>
-          </div>
+        {error && (
+          <p className="text-red-600 font-semibold mb-4">{error}</p>
+        )}
 
-          <div>
-            <p className="text-gray-500">Frequency</p>
-            <p className="font-semibold">{item.frequency}</p>
-          </div>
+        {/* Line-by-line Medicine Display */}
+        {medicineDetails.map((m, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-xl shadow p-5 mb-4 border-l-4 border-[#03506F]"
+          >
+            <h2 className="text-lg font-bold text-[#03506F] mb-2">
+              💊 {m.name}
+            </h2>
 
-          <div>
-            <p className="text-gray-500">Unit Price</p>
-            <p className="font-semibold">₹{item.price}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <p>
+                <span className="text-gray-500">Category:</span>{" "}
+                <b>{m.category}</b>
+              </p>
+              <p>
+                <span className="text-gray-500">Dosage:</span>{" "}
+                <b>{m.dosage}</b>
+              </p>
+              <p>
+                <span className="text-gray-500">Frequency:</span>{" "}
+                <b>{m.frequency} days</b>
+              </p>
+              <p>
+                <span className="text-gray-500">Price:</span>{" "}
+                <b>₹{m.price}</b>
+              </p>
+            </div>
           </div>
+        ))}
 
-          <div>
-            <label className="text-gray-500 block mb-1">
-              Quantity
-            </label>
-            <input
-              type="number"
-              min="1"
-              value={item.quantity}
-              onChange={(e) =>
-                updateQuantity(index, Number(e.target.value))
-              }
-              className="border p-2 rounded-md w-24 text-center focus:outline-none focus:ring-2 focus:ring-[#03506F]"
-            />
+        {/* Empty State */}
+        {medicineDetails.length === 0 && !error && (
+          <div className="bg-white p-6 rounded-xl shadow text-center text-gray-500">
+            <p>No medicines to display</p>
           </div>
-        </div>
+        )}
       </div>
-    ))}
-
-    {/* Grand Total */}
-    {billItems.length > 0 && (
-      <div className="bg-white p-6 rounded-xl shadow mt-8 flex justify-between items-center">
-        <p className="text-xl font-semibold text-gray-700">
-          Grand Total
-        </p>
-        <p className="text-3xl font-bold text-[#03506F]">
-          ₹{totalAmount}
-        </p>
-      </div>
-    )}
-  </div>
-</>
-
+    </>
   );
 }
