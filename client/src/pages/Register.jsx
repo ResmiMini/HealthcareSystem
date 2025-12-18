@@ -65,7 +65,7 @@ export default function RegisterForm() {
       role: "patient"
     });
 
-    const loginId = loginRes.data.user.userId; // backend must return this
+    const loginId = loginRes.data.userId; // backend must return this
 
     console.log("loginid is  " ,loginId);
 
