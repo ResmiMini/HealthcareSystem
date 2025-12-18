@@ -77,7 +77,9 @@ exports.getDoctorsByDepartment = async (req, res) => {
     const { dept } = req.params;
 
     const doctors = await Doctor.find(
-      { specialization: dept },
+      { specialization: dept,
+        status: "approved" 
+       },
       { doctorId:1,name:1} // return only name + specialization
     );
 
