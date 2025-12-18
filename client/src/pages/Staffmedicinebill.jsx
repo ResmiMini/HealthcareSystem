@@ -18,25 +18,29 @@ export default function StaffMedicinebill() {
         `${import.meta.env.VITE_API_URL}/api/prescriptions/patientviewmedicine/${patientId}`
       );
 
-      const prescription = presRes.data.prescription;
+     const prescription = presRes.data.prescription;
 
-      // 2️⃣ For each medicineId, fetch medicine table details
-      const mergedMedicines = await Promise.all(
-        prescription.medicines.map(async (pm) => {
-          const medRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/medicine/getBymedicineId/${pm.medicineId}`
-          );
+if (!prescription || !prescription.medicines) {
+  setError("No medicines found for this patient");
+  return;
+}
 
-          return {
-            medicineId: pm.medicineId,
-            name: medRes.data.name,
-            category: medRes.data.category,
-            price: medRes.data.price,
-            dosage: pm.dosage,
-            frequency: pm.frequency
-          };
-        })
-      );
+const mergedMedicines = await Promise.all(
+  prescription.medicines.map(async (pm) => {
+    const medRes = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/medicine/${pm.medicineId}`
+    );
+
+    return {
+      medicineId: pm.medicineId,
+      name: medRes.data.name,
+      category: medRes.data.category,
+      price: medRes.data.price,
+      dosage: pm.dosage,
+      frequency: pm.frequency
+    };
+  })
+);
 
       setMedicineDetails(mergedMedicines);
 
