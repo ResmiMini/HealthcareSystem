@@ -54,7 +54,10 @@ export default function Login() {
 
     } else if (role === "admin") {
       navigate("/adminDashboard");
+    }else if (role === "staff") {
+      navigate("/staffDashboard");
     }
+
 
   } catch (error) {
     console.log("LOGIN ERROR ", error.response);

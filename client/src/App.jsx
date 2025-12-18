@@ -58,8 +58,12 @@ function App() {
         <Route path="/doctorprofile" element={<Doctorprofile/>} />
         <Route path="/doctorviewreports" element={<DoctorviewReports/>} />
 
+        <Route path="/staffDashboard" element={<Staffdashboard/>} />
 
-        
+
+
+
+
 
         <Route path="/appointment" element={<DoctorRegistration/>} />
         <Route path="/contact" element={<Contact/>}/>
