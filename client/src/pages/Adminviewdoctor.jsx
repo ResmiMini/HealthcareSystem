@@ -106,16 +106,11 @@ export default function Adminviewdoctor() {
           <p><b>Qualification:</b> {selectedDoctor.qualification}</p>
           <p><b>Status:</b> {selectedDoctor.status}</p>
 
-          {selectedDoctor.resume && (
-           <a
-  href={`${selectedDoctor.resume}?dl=true`}
- target="_blank"
-  rel="noopener noreferrer"
-  className="text-blue-600 underline"
->
-  View Resume (PDF)
-</a>
-          )}
+          <iframe
+  src={`${setSelectedDoctor.resume}?dl=true`}
+  className="w-full h-[500px]"
+  title="Doctor Resume"
+/>
         </div>
       )}
     </div>

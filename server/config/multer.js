@@ -6,8 +6,10 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "doctor_resumes",     // folder in Cloudinary
-    resource_type: "raw",        
-    allowed_formats: ["pdf", "doc", "docx"],
+    resource_type: "raw",   
+         
+    public_id: (req, file) =>
+      `${Date.now()}-${file.originalname.replace(".pdf", "")}`
   },
 });
 
