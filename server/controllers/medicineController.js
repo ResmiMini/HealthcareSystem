@@ -79,6 +79,9 @@ exports.getByMedicineId = async (req, res) => {
     });
   }
 };
+
+
+
 // ➤ Update Medicine
 exports.updateMedicine = async (req, res) => {
   try {
