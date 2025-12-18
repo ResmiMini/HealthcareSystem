@@ -15,7 +15,7 @@ export default function StaffMedicinebill() {
 
       // 1️⃣ Fetch latest prescription by patientId
       const presRes = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/prescriptions/latest/${patientId}`
+        `${import.meta.env.VITE_API_URL}/api/prescriptions/patientviewmedicine/${patientId}`
       );
 
       const prescription = presRes.data.prescription;
@@ -24,7 +24,7 @@ export default function StaffMedicinebill() {
       const mergedMedicines = await Promise.all(
         prescription.medicines.map(async (pm) => {
           const medRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/medicine/${pm.medicineId}`
+            `${import.meta.env.VITE_API_URL}/api/medicine/getBymedicineId/${pm.medicineId}`
           );
 
           return {
