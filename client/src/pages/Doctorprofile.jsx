@@ -24,7 +24,7 @@ export default function Doctorprofile() {
   return (
     <>
     
-  <div className="flex min-h-screen">
+  <div className="flex min-h-screen bg-[url('/src/assets/image/back.jpg')]">
     {/* Sidebar */}
     <Docsidebar />
 
@@ -35,7 +35,7 @@ export default function Doctorprofile() {
         {/* Header */}
         <div className="bg-gradient-to-r from-[#0097A0] to-[#03506F] text-white px-6 py-4 rounded-t-2xl">
           <h2 className="text-2xl font-bold flex items-center gap-2">
-            👨‍⚕️ Doctor Profile
+            Doctor Profile
           </h2>
         </div>
 
@@ -69,12 +69,7 @@ export default function Doctorprofile() {
               <span className="text-gray-800">{doctor.qualification}</span>
             </div>
 
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-600">Experience</span>
-              <span className="text-gray-800">
-                {doctor.experience} years
-              </span>
-            </div>
+            
 
             <div className="flex justify-between">
               <span className="font-semibold text-gray-600">Phone</span>
