@@ -50,7 +50,7 @@ export default function DoctorRegistration() {
         
         
       });
-    const userId = loginRes.data.user.userId; // backend must return this
+    const userId = loginRes.data.userId; // backend must return this
 console.log(userId);
 
       // 2️⃣ Prepare FormData for Doctor Registration
