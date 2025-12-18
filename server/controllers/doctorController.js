@@ -2,7 +2,7 @@ const Doctor = require("../models/doctor");
 exports.addDoctor = async (req, res) => {
   try {
     
-    
+    console.log("AUTH HEADER:", req.headers.authorization);
     // 1️⃣ Generate Doctor ID
     const lastDoctor = await Doctor.findOne().sort({ createdAt: -1 });
 
