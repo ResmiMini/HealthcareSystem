@@ -60,6 +60,7 @@ exports.getAllMedicines = async (req, res) => {
 exports.getByMedicineId = async (req, res) => {
   try {
     await connectDB();
+    console.log(req.params.medicineId);
     const medicine = await Medicine.findOne({
       medicineId: req.params.medicineId
     });
