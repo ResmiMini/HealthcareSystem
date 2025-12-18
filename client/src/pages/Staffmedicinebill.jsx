@@ -32,7 +32,7 @@ export default function StaffPrescriptionDetails() {
       const mergedMedicines = await Promise.all(
         prescription.medicines.map(async (pm) => {
           const medRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/medicine/${pm.medicineId}`
+            `${import.meta.env.VITE_API_URL}/api/medicine/getBymedicineId/${pm.medicineId}`
           );
 
           return {
