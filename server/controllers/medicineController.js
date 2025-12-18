@@ -55,18 +55,30 @@ exports.getAllMedicines = async (req, res) => {
 };
 
 // ➤ Get Medicine by ID (MongoDB _id)
-exports.getMedicineById = async (req, res) => {
-  try {
-    const medicine = await Medicine.findById(req.params.id);
-    if (!medicine)
-      return res.status(404).json({ message: "Medicine not found" });
 
-    res.json(medicine);
+exports.getByMedicineId = async (req, res) => {
+  try {
+    const medicine = await Medicine.findOne({
+      medicineId: req.params.medicineId
+    });
+
+    if (!medicine) {
+      return res.status(404).json({
+        success: false,
+        message: "Medicine not found"
+      });
+    }
+
+    res.status(200).json(medicine);
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("FETCH MEDICINE ERROR:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 };
-
 // ➤ Update Medicine
 exports.updateMedicine = async (req, res) => {
   try {

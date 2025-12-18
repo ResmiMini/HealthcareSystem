@@ -2,51 +2,57 @@ import React, { useState } from "react";
 import axios from "axios";
 import Staffsidebar from "../components/Staffsidebar";
 
-export default function StaffMedicinebill() {
+export default function StaffPrescriptionDetails() {
   const [patientId, setPatientId] = useState("");
-  const [medicineDetails, setMedicineDetails] = useState([]);
+  const [medicines, setMedicines] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // 🔹 Fetch prescription + medicine details
-  const fetchPrescriptionDetails = async () => {
+  const fetchPrescriptionAndMedicines = async () => {
     try {
       setError("");
-      setMedicineDetails([]);
+      setMedicines([]);
+      setLoading(true);
 
       // 1️⃣ Fetch latest prescription by patientId
       const presRes = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/prescriptions/patientviewmedicine/${patientId}`
+        `${import.meta.env.VITE_API_URL}/api/prescriptions/latest/${patientId}`,
+        { headers: { "Cache-Control": "no-cache" } }
       );
 
-     const prescription = presRes.data.prescription;
+      const prescription = presRes.data.prescription;
 
-if (!prescription || !prescription.medicines) {
-  setError("No medicines found for this patient");
-  return;
-}
+      if (!prescription || !prescription.medicines) {
+        setError("No prescription found for this patient");
+        setLoading(false);
+        return;
+      }
 
-const mergedMedicines = await Promise.all(
-  prescription.medicines.map(async (pm) => {
-    const medRes = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/medicine/${pm.medicineId}`
-    );
+      // 2️⃣ Fetch medicine details using medicineId
+      const mergedMedicines = await Promise.all(
+        prescription.medicines.map(async (pm) => {
+          const medRes = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/medicine/${pm.medicineId}`
+          );
 
-    return {
-      medicineId: pm.medicineId,
-      name: medRes.data.name,
-      category: medRes.data.category,
-      price: medRes.data.price,
-      dosage: pm.dosage,
-      frequency: pm.frequency
-    };
-  })
-);
+          return {
+            medicineId: pm.medicineId,
+            name: medRes.data.name,
+            category: medRes.data.category,
+            price: medRes.data.price,
+            dosage: pm.dosage,
+            frequency: pm.frequency
+          };
+        })
+      );
 
-      setMedicineDetails(mergedMedicines);
+      setMedicines(mergedMedicines);
+      setLoading(false);
 
     } catch (err) {
       console.error(err);
-      setError("No prescription found for this patient ID");
+      setError("Prescription or medicines not found");
+      setLoading(false);
     }
   };
 
@@ -69,28 +75,38 @@ const mergedMedicines = await Promise.all(
             className="border p-3 rounded w-64"
           />
           <button
-            onClick={fetchPrescriptionDetails}
+            onClick={fetchPrescriptionAndMedicines}
             className="bg-[#03506F] text-white px-6 py-3 rounded"
           >
-            Fetch Prescription
+            Fetch Details
           </button>
         </div>
 
+        {/* Loading */}
+        {loading && (
+          <p className="text-blue-600 font-semibold">
+            Fetching prescription...
+          </p>
+        )}
+
+        {/* Error */}
         {error && (
-          <p className="text-red-600 font-semibold mb-4">{error}</p>
+          <p className="text-red-600 font-semibold mb-4">
+            {error}
+          </p>
         )}
 
         {/* Line-by-line Medicine Display */}
-        {medicineDetails.map((m, index) => (
+        {medicines.map((m, index) => (
           <div
-            key={index}
-            className="bg-white rounded-xl shadow p-5 mb-4 border-l-4 border-[#03506F]"
+            key={`${m.medicineId}-${index}`}
+            className="bg-white rounded-xl shadow p-5 mb-5 border-l-4 border-[#03506F]"
           >
             <h2 className="text-lg font-bold text-[#03506F] mb-2">
               💊 {m.name}
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <p>
                 <span className="text-gray-500">Category:</span>{" "}
                 <b>{m.category}</b>
@@ -112,9 +128,9 @@ const mergedMedicines = await Promise.all(
         ))}
 
         {/* Empty State */}
-        {medicineDetails.length === 0 && !error && (
+        {!loading && medicines.length === 0 && !error && (
           <div className="bg-white p-6 rounded-xl shadow text-center text-gray-500">
-            <p>No medicines to display</p>
+            No medicine data to display
           </div>
         )}
       </div>
