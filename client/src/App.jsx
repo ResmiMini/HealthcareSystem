@@ -29,7 +29,7 @@ import Payment from './pages/Payment';
 import Patientviewmedicine from './pages/Patientviewmedicine';
 import Doctorcomingappointment from'./pages/Doctorcomingappointment';
 import Doctorprofile from './pages/Doctorprofile';
-
+import Staffdashboard from './pages/Staffdashboard';
 function App() {
   const [count, setCount] = useState(0)
 
