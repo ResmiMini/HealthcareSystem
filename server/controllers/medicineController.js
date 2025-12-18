@@ -1,10 +1,10 @@
 const Medicine = require("../models/medicine");
-
+const connectDB = require("../config/db");
 // ➤ Add Medicine
 exports.addMedicine = async (req, res) => {
   try {
     const { name, category, price } = req.body;
-
+await connectDB();
     if (!name || !category || !price) {
       return res.status(400).json({
         message: "All fields are required"
@@ -47,6 +47,7 @@ exports.addMedicine = async (req, res) => {
 // ➤ Get All Medicines
 exports.getAllMedicines = async (req, res) => {
   try {
+    await connectDB();
     const medicines = await Medicine.find();
     res.json(medicines);
   } catch (error) {
@@ -58,6 +59,7 @@ exports.getAllMedicines = async (req, res) => {
 
 exports.getByMedicineId = async (req, res) => {
   try {
+    await connectDB();
     const medicine = await Medicine.findOne({
       medicineId: req.params.medicineId
     });
@@ -85,6 +87,7 @@ exports.getByMedicineId = async (req, res) => {
 // ➤ Update Medicine
 exports.updateMedicine = async (req, res) => {
   try {
+    await connectDB();
     const updatedMedicine = await Medicine.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -106,6 +109,7 @@ exports.updateMedicine = async (req, res) => {
 // ➤ Delete Medicine
 exports.deleteMedicine = async (req, res) => {
   try {
+    await connectDB();
     const deletedMedicine = await Medicine.findByIdAndDelete(req.params.id);
 
     if (!deletedMedicine)
