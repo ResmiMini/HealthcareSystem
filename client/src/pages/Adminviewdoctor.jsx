@@ -108,7 +108,7 @@ export default function Adminviewdoctor() {
 
           {selectedDoctor.resume && (
            <a
-  href={`${import.meta.env.VITE_API_URL}/uploads/resumes/${selectedDoctor.resume}`}
+  href={selectedDoctor.resume}
   target="_blank"
   rel="noreferrer"
   className="text-blue-600 underline"

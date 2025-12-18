@@ -72,7 +72,7 @@ console.log(resume);
         }
       );
 
-      setMessage("Doctor Registered Successfully ✔");
+      setMessage("Doctor Registered Successfully ✔ wait for Admin approval");
 
       // Reset form
       setForm({
