@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+mongoose.set("bufferCommands", false);
 const cors = require("cors");
 require("dotenv").config();
 const path = require("path");
