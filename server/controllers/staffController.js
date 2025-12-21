@@ -1,5 +1,6 @@
 const Staff = require("../models/staff");
 exports.addStaff = async (req, res) => {
+  await connectDB();
   try {
     
     const lastStaff = await Staff.findOne().sort({ createdAt: -1 });

@@ -2,7 +2,7 @@ const MedicalRecord = require("../models/MedicalRecord");
 
 // Create record
 exports.createRecord = async (req, res) => {
-  
+ await connectDB(); 
   try {
     const { patientId, doctorId, appointmentId, symptoms, diagnosis } = req.body;
    
@@ -39,6 +39,7 @@ exports.createRecord = async (req, res) => {
 
 // Get all records
 exports.getAllRecords = async (req, res) => {
+  await connectDB();
   try {
     const records = await MedicalRecord.find();
     res.status(200).json(records);
@@ -50,6 +51,7 @@ exports.getAllRecords = async (req, res) => {
 // Get by ID
 
 exports.getRecordById = async (req, res) => {
+  await connectDB();
   try {
     const record = await MedicalRecord.findById(req.params.id);
 
@@ -64,6 +66,7 @@ exports.getRecordById = async (req, res) => {
 };
 // ➤ Get records by patient ID
 exports.getByPatientId = async (req, res) => {
+  await connectDB();
   try {
     const records = await MedicalRecord.find({ patientId: req.params.pid });
 
@@ -79,6 +82,7 @@ exports.getByPatientId = async (req, res) => {
 
 // ➤ Get records by doctor ID
 exports.getByDoctorId = async (req, res) => {
+  await connectDB();
   try {
     const records = await MedicalRecord.find({ doctorId: req.params.did });
 
@@ -94,6 +98,7 @@ exports.getByDoctorId = async (req, res) => {
 
 // ➤ Get records by appointment ID
 exports.getByAppointmentId = async (req, res) => {
+  await connectDB();
   try {
     const records = await MedicalRecord.find({ appointmentId: req.params.aid });
 
@@ -110,6 +115,7 @@ exports.getByAppointmentId = async (req, res) => {
 // Update record
 
 exports.updateRecord = async (req, res) => {
+  await connectDB();
   try {
     const updated = await MedicalRecord.findByIdAndUpdate(
       req.params.id,
@@ -132,6 +138,7 @@ exports.updateRecord = async (req, res) => {
 
 // Delete record
 exports.deleteRecord = async (req, res) => {
+  await connectDB();
   try {
     const deleted = await MedicalRecord.findByIdAndDelete(req.params.id);
 

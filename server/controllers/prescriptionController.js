@@ -2,6 +2,7 @@ const Prescription = require("../models/prescription");
 const Medicine = require("../models/medicine");
 
 exports.getPatientMedicinesDetailed = async (req, res) => {
+  await connectDB();
   try {
     const { patientId } = req.params;
 
@@ -50,6 +51,7 @@ exports.getPatientMedicinesDetailed = async (req, res) => {
 
 // Create a new prescription
 exports.createPrescription = async (req, res) => {
+  await connectDB();
   try {
     console.log("VERCEL medicines:", req.body.medicines);
 
@@ -83,6 +85,7 @@ exports.createPrescription = async (req, res) => {
 
 //  Get all prescriptions
 exports.getAllPrescriptions = async (req, res) => {
+  await connectDB();
   try {
     const prescriptions = await Prescription.find();
     res.status(200).json(prescriptions);
@@ -93,6 +96,7 @@ exports.getAllPrescriptions = async (req, res) => {
 
 // Get prescription by prescriptionId
 exports.getPrescriptionById = async (req, res) => {
+  await connectDB();
   try {
     const prescription = await Prescription.findOne({
       prescriptionId: req.params.id
@@ -112,6 +116,7 @@ exports.getPrescriptionById = async (req, res) => {
 
 
 exports.getPrescriptionsByPatient = async (req, res) => {
+  await connectDB();
   try {
     const { patientId } = req.params;
 
@@ -166,6 +171,7 @@ exports.getPrescriptionsByPatient = async (req, res) => {
 
 
 exports.getPrescriptionsByDoctor = async (req, res) => {
+  await connectDB();
   try {
     const prescriptions = await Prescription.find({
       doctorId: req.params.doctorId
@@ -185,6 +191,7 @@ exports.getPrescriptionsByDoctor = async (req, res) => {
 
 
 exports.updatePrescription = async (req, res) => {
+  await connectDB();
   try {
     const updatedPrescription = await Prescription.findOneAndUpdate(
       { prescriptionId: req.params.id },
@@ -209,6 +216,7 @@ exports.updatePrescription = async (req, res) => {
 
 
 exports.deletePrescription = async (req, res) => {
+  await connectDB();
   try {
     const deleted = await Prescription.findOneAndDelete({
       prescriptionId: req.params.id

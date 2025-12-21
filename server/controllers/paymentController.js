@@ -1,6 +1,7 @@
 const Payment = require("../models/payment");
 
 exports.savePayment = async (req, res) => {
+  await connectDB();
   try {
     const { appointmentId, patientId, amount } = req.body;
 

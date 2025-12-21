@@ -4,6 +4,7 @@ const Appointment = require("../models/Appointment");
 
 
 exports.bookAppointment = async (req, res) => {
+  await connectDB();
   try {
     const { patientId, doctorId,date,} = req.body;
     console.log("Received data:", req.body); 
@@ -41,6 +42,7 @@ exports.bookAppointment = async (req, res) => {
 
 
 exports.getAppointmentsByPatientId = async (req, res) => {
+  await connectDB();
   try {
     const { patientId } = req.params;
 
@@ -56,6 +58,7 @@ exports.getAppointmentsByPatientId = async (req, res) => {
 
 //appoint by doctor
 exports.getAppointmentsByDoctorId = async (req, res) => {
+  await connectDB();
   try {
     const { doctorId } = req.params;
 
@@ -85,6 +88,7 @@ exports.getAppointmentsByDoctorId = async (req, res) => {
 //upcoming appointment
 
 exports.getUpcomingAppointmentsByDoctor = async (req, res) => {
+  await connectDB();
   try {
     const { doctorId } = req.params;
 
@@ -109,6 +113,7 @@ exports.getUpcomingAppointmentsByDoctor = async (req, res) => {
 
 
 exports.deleteAppointmentById = async (req, res) => {
+  await connectDB();
   try {
     const { appointmentId } = req.params;
 

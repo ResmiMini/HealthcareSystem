@@ -3,6 +3,7 @@ const LabReport = require("../models/Labreport");
 
 // ➤ Create a new lab report
 exports.createLabReport = async (req, res) => {
+  await connectDB();
   try {
     const labReport = new LabReport(req.body);
     await labReport.save();
@@ -18,6 +19,7 @@ exports.createLabReport = async (req, res) => {
 
 // ➤ Get all lab reports
 exports.getAllLabReports = async (req, res) => {
+  await connectDB();
   try {
     const reports = await LabReport.find();
     res.status(200).json(reports);
@@ -28,6 +30,7 @@ exports.getAllLabReports = async (req, res) => {
 
 // ➤ Get lab report by ID
 exports.getLabReportById = async (req, res) => {
+  await connectDB();
   try {
     const report = await LabReport.findById(req.params.id);
 
@@ -43,6 +46,7 @@ exports.getLabReportById = async (req, res) => {
 
 // ➤ Update a lab report
 exports.updateLabReport = async (req, res) => {
+  await connectDB();
   try {
     const updatedReport = await LabReport.findByIdAndUpdate(
       req.params.id,
@@ -65,6 +69,7 @@ exports.updateLabReport = async (req, res) => {
 
 // ➤ Delete lab report
 exports.deleteLabReport = async (req, res) => {
+  await connectDB();
   try {
     const deleted = await LabReport.findByIdAndDelete(req.params.id);
 

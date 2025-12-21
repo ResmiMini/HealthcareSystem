@@ -3,6 +3,7 @@ const Patient = require("../models/patient");
 // ADD Patient
 
 exports.addPatient = async (req, res) => {
+  await connectDB();
   try {
     const patient = new Patient(req.body);
     await patient.save();
@@ -24,6 +25,7 @@ exports.addPatient = async (req, res) => {
 
 // GET all patients
 exports.getAllPatients = async (req, res) => {
+  await connectDB();
   try {
     const patients = await Patient.find();
     res.status(200).json(patients);
@@ -36,6 +38,7 @@ exports.getAllPatients = async (req, res) => {
 
 // GET patient by ID
 exports.getPatientById = async (req, res) => {
+  await connectDB();
   try {
     const patient = await Patient.findOne({ patientId: req.params.patientId });
 
@@ -50,6 +53,7 @@ exports.getPatientById = async (req, res) => {
 
 
 exports.getPatientByUserId = async (req, res) => {
+  await connectDB();
   try {
     const patient = await Patient.findOne(
       { userId: req.params.userId},

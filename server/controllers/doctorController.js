@@ -1,5 +1,6 @@
 const Doctor = require("../models/doctor");
 exports.addDoctor = async (req, res) => {
+  await connectDB();
   try {
     console.log("BODY:", req.body);
     console.log("FILE:", req.file);
@@ -45,6 +46,7 @@ console.log(req.body.userId);
 
 
 exports.getAllDoctors = async (req, res) => {
+  await connectDB();
   try {
     const doctors = await Doctor.find();
     res.json(doctors);
@@ -73,6 +75,7 @@ exports.getSpecializations = async (req, res) => {
 // selecting doctor based on specialization
 
 exports.getDoctorsByDepartment = async (req, res) => {
+  await connectDB();
   try {
     const { dept } = req.params;
 
@@ -94,6 +97,7 @@ exports.getDoctorsByDepartment = async (req, res) => {
 
 //doctor based on doctorid
 exports.getDoctorByDoctorId = async (req, res) => {
+  await connectDB();
   try {
     const doctor = await Doctor.findOne({ doctorId: req.params.doctorId });
 
@@ -115,6 +119,7 @@ exports.deleteDoctor = async (req, res) => {
 };
 //doctor by userId
 exports.getDoctorByuserId = async (req, res) => {
+  await connectDB();
   try {
     const doctor = await Doctor.findOne({ userId: req.params.userId });
 
@@ -129,6 +134,7 @@ exports.getDoctorByuserId = async (req, res) => {
 
 //approving doctor
 exports.approveDoctor = async (req, res) => {
+  await connectDB();
   try {
     const doctor = await Doctor.findOneAndUpdate(
       { doctorId: req.params.doctorId },
