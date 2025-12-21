@@ -28,6 +28,7 @@ export default function Patientviewreports() {
   }, [patientId]);
   const viewPDF = (report) => {
   const doc = new jsPDF();
+  let y = 15;
    doc.addImage(Logo, "PNG", 10, 10, 25, 25); // logo
 
   doc.setFontSize(16);
@@ -40,21 +41,31 @@ export default function Patientviewreports() {
   doc.text(" Nooranadu ,Alappuzha, Kerala", 40, 31);
 
   // Line below header
-  doc.line(10, 38, 200, 38);
+   y += 30;
+  doc.line(10, y, 200, y);
 
-
+ y += 10;
   doc.setFontSize(18);
   doc.text("Medical Report", 14, 20);
-
+y += 12;
   doc.setFontSize(12);
   doc.text(`Patient ID: ${patientId}`, 14, 35);
+   y += 8;
   doc.text(`Doctor Name: ${report.doctorName}`, 14, 45);
-  doc.text(`Diagnosis: ${report.diagnosis}`, 14, 55);
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 65);
+   y += 8;
+  const diagnosisText = doc.splitTextToSize(
+    `Diagnosis: ${report.diagnosis}`,
+    170
+  );
+  doc.text(diagnosisText, 14, y);
+  y += diagnosisText.length * 6;
 
-  // Open PDF in new tab (VIEW)
-  const pdfBlob = doc.output("bloburl");
-  window.open(pdfBlob);
+  y += 5;
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, y);
+
+  // ===== OPEN PDF =====
+  const pdfUrl = doc.output("bloburl");
+  window.open(pdfUrl);
 };
 
   return (
