@@ -1,5 +1,5 @@
 const Patient = require("../models/patient");
-
+const connectDB = require("../config/db");
 // ADD Patient
 
 exports.addPatient = async (req, res) => {

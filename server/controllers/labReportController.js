@@ -1,6 +1,6 @@
 
 const LabReport = require("../models/Labreport");
-
+const connectDB = require("../config/db");
 // ➤ Create a new lab report
 exports.createLabReport = async (req, res) => {
   await connectDB();

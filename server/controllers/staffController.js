@@ -1,4 +1,5 @@
 const Staff = require("../models/staff");
+const connectDB = require("../config/db");
 exports.addStaff = async (req, res) => {
   await connectDB();
   try {

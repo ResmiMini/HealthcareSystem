@@ -1,5 +1,5 @@
 const MedicalRecord = require("../models/MedicalRecord");
-
+const connectDB = require("../config/db");
 // Create record
 exports.createRecord = async (req, res) => {
  await connectDB(); 

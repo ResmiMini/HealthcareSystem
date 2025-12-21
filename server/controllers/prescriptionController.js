@@ -1,6 +1,6 @@
 const Prescription = require("../models/prescription");
 const Medicine = require("../models/medicine");
-
+const connectDB = require("../config/db");
 exports.getPatientMedicinesDetailed = async (req, res) => {
   await connectDB();
   try {

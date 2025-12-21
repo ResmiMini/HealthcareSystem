@@ -1,5 +1,5 @@
 const Payment = require("../models/payment");
-
+const connectDB = require("../config/db");
 exports.savePayment = async (req, res) => {
   await connectDB();
   try {

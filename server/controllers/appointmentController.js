@@ -1,5 +1,5 @@
 const Appointment = require("../models/Appointment");
-
+const connectDB = require("../config/db");
 //book an appointment
 
 
