@@ -112,26 +112,28 @@ exports.getAppointmentsByDoctorId = async (req, res) => {
 //upcoming appointment
 
 exports.getUpcomingAppointmentsByDoctor = async (req, res) => {
-  await connectDB();
-  try {
+ try {
+    await connectDB();
+
     const { doctorId } = req.params;
 
-    // End of today
-    const endOfToday = new Date();
-    endOfToday.setHours(23, 59, 59, 999);
+    const now = new Date();
 
     const appointments = await Appointment.find({
       doctorId,
-      date: { $gt: endOfToday }  
+      date: { $gte: now }  
     }).sort({ date: 1 });
 
-    res.json({
+    res.status(200).json({
       success: true,
       appointments
     });
   } catch (error) {
     console.error("❌ Upcoming appointments error:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 };
 
