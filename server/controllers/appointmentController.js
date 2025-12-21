@@ -111,13 +111,14 @@ exports.getAppointmentsByDoctorId = async (req, res) => {
 
 //upcoming appointment
 
+
 exports.getUpcomingAppointmentsByDoctor = async (req, res) => {
   try {
     await connectDB();
 
     const { doctorId } = req.params;
 
-    // ✅ Tomorrow start in UTC
+    // 🔹 Get start of tomorrow in UTC
     const now = new Date();
     const startOfTomorrowUTC = new Date(Date.UTC(
       now.getUTCFullYear(),
@@ -126,29 +127,24 @@ exports.getUpcomingAppointmentsByDoctor = async (req, res) => {
       0, 0, 0, 0
     ));
 
-    console.log("START OF TOMORROW (UTC):", startOfTomorrowUTC);
-
     const appointments = await Appointment.find({
       doctorId,
       date: { $gte: startOfTomorrowUTC }
     }).sort({ date: 1 });
 
-    console.log("FUTURE APPOINTMENTS:", appointments);
-
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       appointments
     });
 
   } catch (error) {
     console.error("❌ Future appointments error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Server error"
     });
   }
 };
-
 
 exports.deleteAppointmentById = async (req, res) => {
   await connectDB();
