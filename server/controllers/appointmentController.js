@@ -117,15 +117,23 @@ exports.getUpcomingAppointmentsByDoctor = async (req, res) => {
 
     const { doctorId } = req.params;
 
-    // ✅ Start of tomorrow (IST safe)
-    const startOfTomorrow = new Date();
-    startOfTomorrow.setDate(startOfTomorrow.getDate() + 1);
-    startOfTomorrow.setHours(0, 0, 0, 0);
+    // ✅ Tomorrow start in UTC
+    const now = new Date();
+    const startOfTomorrowUTC = new Date(Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + 1,
+      0, 0, 0, 0
+    ));
+
+    console.log("START OF TOMORROW (UTC):", startOfTomorrowUTC);
 
     const appointments = await Appointment.find({
       doctorId,
-      date: { $gte: startOfTomorrow }
+      date: { $gte: startOfTomorrowUTC }
     }).sort({ date: 1 });
+
+    console.log("FUTURE APPOINTMENTS:", appointments);
 
     res.status(200).json({
       success: true,
