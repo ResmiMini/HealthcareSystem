@@ -75,7 +75,7 @@ exports.getByPatientId = async (req, res) => {
 
     // 1️⃣ Get medical records of patient
     const records = await MedicalRecord.find({ patientId });
-
+console.log("PATIENT PARAM:", JSON.stringify(req.params.patientId));
     if (!records || records.length === 0) {
       return res.status(404).json({
         success: false,
