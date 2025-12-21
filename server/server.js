@@ -16,7 +16,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
   cors({
-    origin: "healthcare-systemfrontend.vercel.app",
+    origin: "https://healthcare-systemfrontend.vercel.app/",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
@@ -55,7 +55,6 @@ app.use("/api/staff", staffRoutes);
 
 
 //APPOINTMENT ROUTES
-
 
 const appointmentRoutes = require("./routes/appointmentRoutes");
 app.use("/api/appointment", appointmentRoutes);
