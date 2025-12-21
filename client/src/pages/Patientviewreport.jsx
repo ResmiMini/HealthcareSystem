@@ -16,7 +16,7 @@ export default function Patientviewreports() {
           `${import.meta.env.VITE_API_URL}/api/medicalrecord/patientreport/${patientId}`
         );
 
-        setReports(res.data.records); // ✅ FIX
+        setReports(res.data.records); 
       } catch (err) {
         setError(err.response?.data?.message || "Something went wrong");
       }

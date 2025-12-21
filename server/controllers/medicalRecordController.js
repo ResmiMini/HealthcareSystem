@@ -71,6 +71,7 @@ exports.getByPatientId = async (req, res) => {
     await connectDB();
 
     const { patientId } = req.params;
+    console.log(patientId);
 
     // 1️⃣ Get medical records of patient
     const records = await MedicalRecord.find({ patientId });
