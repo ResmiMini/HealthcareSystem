@@ -1,4 +1,5 @@
 const Appointment = require("../models/Appointment");
+const Doctor = require("../models/doctor");
 const connectDB = require("../config/db");
 //book an appointment
 
