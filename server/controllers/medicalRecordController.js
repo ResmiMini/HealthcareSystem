@@ -79,7 +79,7 @@ exports.getByPatientId = async (req, res) => {
     if (!records || records.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No medical records found"
+        message: "No medical records found sorrrrry"
       });
     }
 
