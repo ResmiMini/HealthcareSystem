@@ -3,6 +3,7 @@ import axios from "axios";
 import Patientsidebar from "../components/Patientsidebar";
 import Footer from "../components/Footer";
 import jsPDF from "jspdf";
+import Logo from "../assets/image/Logo.png";
 
 export default function Patientviewreports() {
   const [reports, setReports] = useState([]);
@@ -27,6 +28,20 @@ export default function Patientviewreports() {
   }, [patientId]);
   const viewPDF = (report) => {
   const doc = new jsPDF();
+   doc.addImage(Logo, "PNG", 10, 10, 25, 25); // logo
+
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text("Health care Hospital", 40, 18);
+
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  doc.text("Your Health Our Responsibility", 40, 25);
+  doc.text(" Nooranadu ,Alappuzha, Kerala", 40, 31);
+
+  // Line below header
+  doc.line(10, 38, 200, 38);
+
 
   doc.setFontSize(18);
   doc.text("Medical Report", 14, 20);
