@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from "react";
 import axios from "axios";
 import Patientsidebar from "../components/Patientsidebar";
 import Footer from "../components/Footer";
+import jsPDF from "jspdf";
 
 export default function Patientviewreports() {
   const [reports, setReports] = useState([]);
@@ -24,6 +25,22 @@ export default function Patientviewreports() {
 
     if (patientId) fetchReports();
   }, [patientId]);
+  const viewPDF = (report) => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("Medical Report", 14, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Patient ID: ${patientId}`, 14, 35);
+  doc.text(`Doctor Name: ${report.doctorName}`, 14, 45);
+  doc.text(`Diagnosis: ${report.diagnosis}`, 14, 55);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 65);
+
+  // Open PDF in new tab (VIEW)
+  const pdfBlob = doc.output("bloburl");
+  window.open(pdfBlob);
+};
 
   return (
     <>
@@ -45,6 +62,7 @@ export default function Patientviewreports() {
                 <tr className="bg-gray-200 text-left">
                   <th className="border p-3">Doctor</th>
                   <th className="border p-3">Diagnosis</th>
+                  <th className="border p-3">Action</th>
                 </tr>
               </thead>
 
@@ -62,6 +80,16 @@ export default function Patientviewreports() {
                         {r.doctorName || "Unknown Doctor"}
                       </td>
                       <td className="border p-3">{r.diagnosis}</td>
+
+ <td className="border p-3 text-center">
+    <button
+      onClick={() => viewPDF(r)}
+      className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+    >
+      View
+    </button>
+  </td>
+
                     </tr>
                   ))
                 )}
