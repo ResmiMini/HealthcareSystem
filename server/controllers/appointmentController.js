@@ -42,17 +42,40 @@ exports.bookAppointment = async (req, res) => {
 
 
 exports.getAppointmentsByPatientId = async (req, res) => {
-  await connectDB();
   try {
+    await connectDB();
+
     const { patientId } = req.params;
 
-    const appointments = await Appointment.find({ patientId })
-      .populate("doctorId", "name")   // ← fetch only doctor name
+    const appointments = await Appointment
+      .find({ patientId })
       .sort({ date: 1 });
 
-    res.json({ appointments });
+    // 🔥 Manually attach doctor name
+    const result = await Promise.all(
+      appointments.map(async (appt) => {
+        const doctor = await Doctor.findOne(
+          { doctorId: appt.doctorId },   // STRING match
+          { name: 1, specialization: 1 }
+        );
+
+        return {
+          ...appt.toObject(),
+          doctorName: doctor ? doctor.name : "Unknown",
+          specialization: doctor ? doctor.specialization : "-"
+        };
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      count: result.length,
+      appointments: result
+    });
+
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("GET APPOINTMENTS ERROR:", err);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
