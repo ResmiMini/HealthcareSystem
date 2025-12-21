@@ -65,6 +65,8 @@ exports.getRecordById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
 // ➤ Get records by patient ID
 exports.getByPatientId = async (req, res) => {
   try {
@@ -72,11 +74,11 @@ exports.getByPatientId = async (req, res) => {
 
     // const { patientId } = req.params;
     const patientId = req.params.pid;
-    console.log(patientId);
+    
 
     // 1️⃣ Get medical records of patient
     const records = await MedicalRecord.find({ patientId });
-console.log("PATIENT PARAM:", JSON.stringify(req.params.patientId));
+console.log("PATIENT PARAM:",patientId);
     if (!records || records.length === 0) {
       return res.status(404).json({
         success: false,
