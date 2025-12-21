@@ -32,16 +32,16 @@ export default function Patientviewreports() {
   let y = 15; // vertical cursor
 
   // ===== HEADER =====
-  doc.addImage(hospitalLogo, "PNG", 10, y, 22, 22);
+  doc.addImage(Logo, "PNG", 10, y, 22, 22);
 
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
-  doc.text("ABC MULTI SPECIALITY HOSPITAL", 40, y + 6);
+  doc.text("HEALTHCARE  HOSPITAL", 40, y + 6);
 
   doc.setFontSize(11);
   doc.setFont("helvetica", "normal");
-  doc.text("Caring for Life", 40, y + 13);
-  doc.text("Trivandrum, Kerala", 40, y + 18);
+  doc.text("Your Health Our Responsibility", 40, y + 13);
+  doc.text("Nooranadu Alappuzha, Kerala", 40, y + 18);
 
   y += 30;
   doc.line(10, y, 200, y); // divider
