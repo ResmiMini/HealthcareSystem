@@ -1,4 +1,5 @@
 const MedicalRecord = require("../models/MedicalRecord");
+const Doctor=require("../models/doctor");
 const connectDB = require("../config/db");
 // Create record
 exports.createRecord = async (req, res) => {
@@ -66,19 +67,50 @@ exports.getRecordById = async (req, res) => {
 };
 // ➤ Get records by patient ID
 exports.getByPatientId = async (req, res) => {
-  await connectDB();
   try {
-    const records = await MedicalRecord.find({ patientId: req.params.pid });
+    await connectDB();
 
-    if (records.length === 0) {
-      return res.status(404).json({ message: "No records found for patient" });
+    const { patientId } = req.params;
+
+    // 1️⃣ Get medical records of patient
+    const records = await MedicalRecord.find({ patientId });
+
+    if (!records || records.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No medical records found"
+      });
     }
 
-    res.status(200).json(records);
+    // 2️⃣ Attach doctor name manually
+    const recordsWithDoctorName = await Promise.all(
+      records.map(async (record) => {
+        const doctor = await Doctor.findOne(
+          { doctorId: record.doctorId },
+          { name: 1 }
+        );
+
+        return {
+          ...record._doc,
+          doctorName: doctor ? doctor.name : "Unknown Doctor"
+        };
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      records: recordsWithDoctorName
+    });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("GET RECORDS ERROR:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
+
 
 // ➤ Get records by doctor ID
 exports.getByDoctorId = async (req, res) => {
