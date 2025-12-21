@@ -27,32 +27,43 @@ export default function Patientviewreports() {
     if (patientId) fetchReports();
   }, [patientId]);
   const viewPDF = (report) => {
+  
   const doc = new jsPDF();
-  let y = 15;
-   doc.addImage(Logo, "PNG", 10, 10, 25, 25); // logo
+  let y = 15; // vertical cursor
+
+  // ===== HEADER =====
+  doc.addImage(hospitalLogo, "PNG", 10, y, 22, 22);
 
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
-  doc.text("Health care Hospital", 40, 18);
+  doc.text("ABC MULTI SPECIALITY HOSPITAL", 40, y + 6);
 
   doc.setFontSize(11);
   doc.setFont("helvetica", "normal");
-  doc.text("Your Health Our Responsibility", 40, 25);
-  doc.text(" Nooranadu ,Alappuzha, Kerala", 40, 31);
+  doc.text("Caring for Life", 40, y + 13);
+  doc.text("Trivandrum, Kerala", 40, y + 18);
 
-  // Line below header
-   y += 30;
-  doc.line(10, y, 200, y);
+  y += 30;
+  doc.line(10, y, 200, y); // divider
 
- y += 10;
-  doc.setFontSize(18);
-  doc.text("Medical Report", 14, 20);
-y += 12;
-  doc.setFontSize(12);
-  doc.text(`Patient ID: ${patientId}`, 14, 35);
-   y += 8;
-  doc.text(`Doctor Name: ${report.doctorName}`, 14, 45);
-   y += 8;
+  // ===== TITLE =====
+  y += 10;
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text("Medical Report", 80, y);
+
+  // ===== CONTENT =====
+  y += 12;
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+
+  doc.text(`Patient ID: ${patientId}`, 14, y);
+  y += 8;
+
+  doc.text(`Doctor Name: ${report.doctorName}`, 14, y);
+  y += 8;
+
+  // Diagnosis (wrapped)
   const diagnosisText = doc.splitTextToSize(
     `Diagnosis: ${report.diagnosis}`,
     170
