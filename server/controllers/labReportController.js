@@ -88,25 +88,33 @@ exports.getLabReportById = async (req, res) => {
 
 // ➤ Update a lab report
 exports.updateLabReport = async (req, res) => {
-  await connectDB();
+  exports.updateLabResult = async (req, res) => {
   try {
-    const updatedReport = await LabReport.findByIdAndUpdate(
-      req.params.id,
-      req.body,
+    await connectDB();
+
+    const { labReportId } = req.params;
+    const { result } = req.body;
+
+    const report = await LabReport.findOneAndUpdate(
+      { labReportId },
+      { result },
       { new: true }
     );
 
-    if (!updatedReport) {
-      return res.status(404).json({ error: "Lab report not found" });
+    if (!report) {
+      return res.status(404).json({ message: "Lab Report not found" });
     }
 
-    res.status(200).json({
-      message: "Lab report updated successfully",
-      data: updatedReport
+    res.json({
+      success: true,
+      message: "Result updated successfully",
+      report
     });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
+};
 };
 
 // ➤ Delete lab report

@@ -29,8 +29,8 @@ export default function Staffsidebar() {
           Medicine Bill
         </NavLink>
 
-        <NavLink to="/Labbill" className="block py-2 px-3 rounded-lg  bg-[#0097A0] hover:bg-yellow-600">
-         Lab Bill
+        <NavLink to="/Labresult" className="block py-2 px-3 rounded-lg  bg-[#0097A0] hover:bg-yellow-600">
+         Update Lab Results
         </NavLink>
 
         
