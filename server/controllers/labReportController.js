@@ -75,7 +75,7 @@ exports.getLabReportById = async (req, res) => {
   await connectDB();
   try {
     const { labReportId } = req.params;
-    const report = await LabReport.findById({ labReportId });
+    const report = await LabReport.findOne({ labReportId });
 
     if (!report) {
       return res.status(404).json({ error: "Lab report not found" });
