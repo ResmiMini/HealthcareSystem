@@ -40,27 +40,55 @@ export default function Patientviewlabresult() {
     doc.text("LAB Report", 80, y);
   
     // ===== CONTENT =====
-    y += 12;
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "normal");
-  
-    doc.text(`Patient ID: ${patientId}`, 14, y);
-    y += 8;
-  
-    doc.text(`Doctor Name: ${report.doctorName}`, 14, y);
-    y += 8;
-  
-    // Diagnosis (wrapped)
-    const diagnosisText = doc.splitTextToSize(
-      `Test: ${report.testName}`,
-      170
-    );
-    doc.text(diagnosisText, 14, y);
-    y += diagnosisText.length * 6;
-  
-    y += 5;
-    doc.text(`Result: ${report.result}`, 14, y);
-  
+   // starting position
+y += 12;
+doc.setFontSize(11);
+doc.setFont("helvetica", "normal");
+
+const labelX = 14;   // left column (labels)
+const valueX = 60;   // right column (values)
+const maxWidth = 130;
+const lineGap = 8;
+
+// ───────── Patient ID ─────────
+doc.setFont("helvetica", "bold");
+doc.text("Patient ID :", labelX, y);
+doc.setFont("helvetica", "normal");
+doc.text(patientId, valueX, y);
+y += lineGap;
+
+// ───────── Doctor Name ─────────
+doc.setFont("helvetica", "bold");
+doc.text("Doctor Name :", labelX, y);
+doc.setFont("helvetica", "normal");
+doc.text(report.doctorName || "-", valueX, y);
+y += lineGap;
+
+// ───────── Test Name (wrapped) ─────────
+doc.setFont("helvetica", "bold");
+doc.text("Test Name :", labelX, y);
+doc.setFont("helvetica", "normal");
+
+const testText = doc.splitTextToSize(
+  report.testName || "-",
+  maxWidth
+);
+doc.text(testText, valueX, y);
+y += testText.length * lineGap;
+
+// ───────── Result (wrapped & highlighted) ─────────
+y += 4;
+doc.setFont("helvetica", "bold");
+doc.text("Result :", labelX, y);
+doc.setFont("helvetica", "normal");
+
+const resultText = doc.splitTextToSize(
+  report.result || "Pending",
+  maxWidth
+);
+doc.text(resultText, valueX, y);
+y += resultText.length * lineGap;
+
     // ===== OPEN PDF =====
     const pdfUrl = doc.output("bloburl");
     window.open(pdfUrl);
