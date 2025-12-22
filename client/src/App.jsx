@@ -31,6 +31,7 @@ import Doctorcomingappointment from'./pages/Doctorcomingappointment';
 import Doctorprofile from './pages/Doctorprofile';
 import Staffdashboard from './pages/Staffdashboard';
 import Staffmedicinebill from './pages/Staffmedicinebill';
+import AddTest from './pages/Addtest';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -81,6 +82,7 @@ function App() {
         <Route path="/adminviewpatients" element={<Adminviewpatient/>} />
          <Route path="/adminviewpatientrecords/:patientId" element={<Patientviewreports/>} />
           <Route path="/adminviewdoctors" element={<Adminviewdoctor/>} />
+          <Route path="/adminaddtest" element={<AddTest/>}/>
 
 
 <Route path="/payment" element={<Payment/>}/>
