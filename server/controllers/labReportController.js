@@ -1,5 +1,8 @@
 
 const LabReport = require("../models/Labreport");
+const Doctor = require("../models/doctor");
+const Patient = require("../models/patient");
+const Test = require("../models/test");
 const connectDB = require("../config/db");
 // ➤ Create a new lab report
 
@@ -59,6 +62,108 @@ exports.createLabReport = async (req, res) => {
   }
 };
 
+
+exports.getLabReportsByPatient = async (req, res) => {
+  await connectDB();
+  try {
+    const { patientId } = req.params;
+
+    const reports = await LabReport.find({ patientId });
+
+    const response = await Promise.all(
+      reports.map(async (r) => {
+        const doctor = await Doctor.findOne({ doctorId: r.doctorId });
+        const test = await Test.findOne({ testId: r.testId });
+
+        return {
+          labReportId: r.labReportId,
+          doctorName: doctor?.name,
+          testName: test?.name,
+          result: r.result || "Pending"
+        };
+      })
+    );
+
+    res.json(response);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+exports.generateLabReportPDF = async (req, res) => {
+  await connectDB();
+  try {
+    const { labReportId } = req.params;
+
+    const report = await LabReport.findOne({ labReportId });
+    if (!report) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    const doctor = await Doctor.findOne({ doctorId: report.doctorId });
+    const patient = await Patient.findOne({ patientId: report.patientId });
+    const test = await Test.findOne({ testId: report.testId });
+
+    const doc = new PDFDocument({ margin: 50 });
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `inline; filename=${labReportId}.pdf`
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(18).text("Healthcare Hospital", { align: "center" });
+    doc.moveDown();
+    doc.fontSize(14).text("LAB REPORT", { align: "center" });
+    doc.moveDown(2);
+
+    doc.fontSize(11);
+    doc.text(`Lab Report ID : ${labReportId}`);
+    doc.text(`Patient Name  : ${patient?.name}`);
+    doc.text(`Doctor Name   : ${doctor?.name}`);
+    doc.text(`Test Name     : ${test?.name}`);
+    doc.text(`Date          : ${new Date().toLocaleDateString()}`);
+
+    doc.moveDown();
+    doc.fontSize(12).text("Result:");
+    doc.moveDown(0.5);
+    doc.fontSize(11).text(report.result || "Pending");
+
+    doc.moveDown(3);
+    doc.text("Authorized Signature", { align: "right" });
+
+    doc.end();
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ➤ Get all lab reports
 exports.getAllLabReports = async (req, res) => {
   await connectDB();
@@ -81,7 +186,18 @@ exports.getLabReportById = async (req, res) => {
       return res.status(404).json({ error: "Lab report not found" });
     }
 
-    res.status(200).json(report);
+    const doctor = await Doctor.findOne({ doctorId: report.doctorId });
+    const patient = await Patient.findOne({ patientId: report.patientId });
+    const test = await Test.findOne({ testId: report.testId });
+
+    // ✅ SEND NAMES TO FRONTEND
+    res.status(200).json({
+      labReportId: report.labReportId,
+      doctorName: doctor ? doctor.name : "Unknown Doctor",
+      patientName: patient ? patient.name : "Unknown Patient",
+      testName: test ? test.name : "Unknown Test",
+      result: report.result
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

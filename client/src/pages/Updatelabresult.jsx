@@ -65,9 +65,9 @@ export default function Updatelabresult() {
       {/* Display Details */}
       {details && (
         <div className="mt-5 space-y-3">
-          <p><b>Doctor:</b> {details.doctorName}</p>
-          <p><b>Patient:</b> {details.patientName}</p>
-          <p><b>Test:</b> {details.testName}</p>
+          <p><b>DoctorId:</b> {details.doctorId}</p>
+          <p><b>PatientId:</b> {details.patientId}</p>
+          <p><b>TestId:</b> {details.testId}</p>
 
           <textarea
             placeholder="Enter Result"

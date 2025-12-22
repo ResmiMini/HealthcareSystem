@@ -49,10 +49,10 @@ export default function Docsidebar()
            My medicine
           </Link>
           <Link
-            to="/doctor/profile"
+            to="/labresults"
             className="block py-2 px-3 rounded-lg bg-[#0097A0] hover:bg-yellow-600"
           >
-            payment
+            Labresults
           </Link>
           
         </nav>
