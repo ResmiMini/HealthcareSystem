@@ -3,6 +3,7 @@ const LabReport = require("../models/Labreport");
 const Doctor = require("../models/doctor");
 const Patient = require("../models/patient");
 const Test = require("../models/test");
+const PDFDocument = require("pdfkit");
 const connectDB = require("../config/db");
 // ➤ Create a new lab report
 

@@ -9,7 +9,7 @@ export default function Patientviewlabresult() {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/api/labreport/patientreport/${patientId}`)
+      .get(`${import.meta.env.VITE_API_URL}/api/labreports/patientreport/${patientId}`)
       .then((res) => setReports(res.data));
   }, []);
 
@@ -40,7 +40,7 @@ export default function Patientviewlabresult() {
                   <button
                     onClick={() =>
                       window.open(
-                        `${import.meta.env.VITE_API_URL}/api/labreport/reportpdf/${r.labReportId}`,
+                        `${import.meta.env.VITE_API_URL}/api/labreports/reportpdf/${r.labReportId}`,
                         "_blank"
                       )
                     }
