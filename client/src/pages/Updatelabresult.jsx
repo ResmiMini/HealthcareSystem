@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Staffsidebar from "../components/Staffsidebar";
 
 export default function Updatelabresult() {
   const [labReportId, setLabReportId] = useState("");
@@ -38,6 +39,8 @@ export default function Updatelabresult() {
   };
 
   return (
+    <div className="flex bg-[url('/src/assets/image/back.jpg')] py-2 px-5 mx-10 ">
+          <Staffsidebar />
     <div className="p-6 max-w-xl mx-auto bg-white rounded shadow">
       <h2 className="text-xl font-bold mb-4">Enter Lab Result</h2>
 
@@ -81,6 +84,7 @@ export default function Updatelabresult() {
           </button>
         </div>
       )}
+    </div>
     </div>
   );
 }
