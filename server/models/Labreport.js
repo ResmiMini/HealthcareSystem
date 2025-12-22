@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const labReportSchema = new mongoose.Schema({
-  testId: {
+  labreportId: {
     type: String,
     unique: true
   },
@@ -13,18 +13,19 @@ const labReportSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  testName: {
+  testId: {
     type: String,
     required: true
   },
-  testDate: {
-    type: Date,
-    required: true
-  },
-  result: {
-    type: String,
-    required: true
-  },
+   result: {
+      type: String,
+      default: null
+    },
+   payment: {
+      type: String,
+      enum: ["paid", "not paid"],
+      default: "not paid",
+    },
   createdAt: {
     type: Date,
     default: Date.now
@@ -40,4 +41,6 @@ labReportSchema.pre("save", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("LabReport", labReportSchema);
+module.exports =
+  mongoose.models.LabReport ||
+  mongoose.model("LabReport", labReportSchema);

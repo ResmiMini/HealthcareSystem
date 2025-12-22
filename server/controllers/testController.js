@@ -55,3 +55,24 @@ exports.addTest = async (req, res) => {
     });
   }
 };
+
+
+//select test names
+
+exports.getAllTests = async (req, res) => {
+  await connectDB();
+  try {
+    const tests = await Test.find({}, { testId: 1, name: 1 });
+
+    res.status(200).json({
+      success: true,
+      tests
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};

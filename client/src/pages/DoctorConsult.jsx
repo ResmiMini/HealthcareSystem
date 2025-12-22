@@ -8,8 +8,22 @@ export default function DoctorConsult() {
   const [categories, setCategories] = useState([]);
   const [patient, setPatient] = useState(null);
   const { patientId,appointmentId } = useParams();
+const [tests, setTests] = useState([]);
+  const [selectedTest, setSelectedTest] = useState("");
 
-
+  useEffect(() => {
+    fetchTests();
+  }, []);
+const fetchTests = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/test/getalltest`
+      );
+      setTests(res.data.tests);
+    } catch (err) {
+      console.error("Failed to fetch tests");
+    }
+  }
   useEffect(() => {
     const fetchPatient = async () => {
       try {
@@ -104,7 +118,7 @@ export default function DoctorConsult() {
 console.log("FORM medicines:", form.medicines);
 console.log("CLEAN medicines:", cleanedMedicines);
 console.log(
-  "🚀 POSTING TO:",
+  " POSTING TO:",
   `${import.meta.env.VITE_API_URL}/api/prescriptions/addprescription`
 );
     await axios.post(`${import.meta.env.VITE_API_URL}/api/prescriptions/addprescription`, {
@@ -114,7 +128,17 @@ console.log(
       medicines: cleanedMedicines,
     });
 
-    alert("Medical record & prescription saved successfully");
+    await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/labreports/add`,
+  {
+    patientId: patient.patientId,
+      doctorId: localStorage.getItem("doctorId"),
+    testId:selectedTest
+    
+  }
+);
+
+    alert("Medical record ,labtest,  prescription saved successfully");
   } catch (err) {
     console.error(err);
     alert("Failed to save data");
@@ -283,17 +307,18 @@ console.log(
 
   <h1 className="text-4xl text-center text-yellow-600">LAB TEST </h1>
           <select
-  value={testName}
-  onChange={(e) => setTestName(e.target.value)}
-  className="w-full border p-2 rounded-md"
->
-  <option value="">Select Test</option>
-  <option value="Blood Test">Blood Test</option>
-  <option value="Urine Test">Urine Test</option>
-  <option value="X-Ray">X-Ray</option>
-  <option value="ECG">ECG</option>
-  <option value="MRI Scan">MRI Scan</option>
-</select>
+        value={selectedTest}
+        onChange={(e) => setSelectedTest(e.target.value)}
+        className="w-full border p-2 rounded"
+      >
+        <option value="">-- Select Test --</option>
+
+        {tests.map((t) => (
+          <option key={t.testId} value={t.testId}>
+            {t.name}
+          </option>
+        ))}
+      </select>
 
           {/* Submit */}
           <div className="text-right">

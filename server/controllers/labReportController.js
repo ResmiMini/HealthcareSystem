@@ -2,18 +2,61 @@
 const LabReport = require("../models/Labreport");
 const connectDB = require("../config/db");
 // ➤ Create a new lab report
+
+
 exports.createLabReport = async (req, res) => {
-  await connectDB();
   try {
-    const labReport = new LabReport(req.body);
+    await connectDB();
+
+    const { patientId, doctorId, testId, testDate } = req.body;
+
+    //  Validation
+    if (!patientId || !doctorId || !testId || !testDate) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required"
+      });
+    }
+
+    // 🔢 AUTO-INCREMENT LAB REPORT ID
+    const lastReport = await LabReport.findOne()
+      .sort({ createdAt: -1 })
+      .select("labreportId");
+
+    let nextNumber = 1;
+
+    if (lastReport && lastReport.labreportId) {
+      nextNumber =
+        parseInt(lastReport.labreportId.replace("LAB", ""), 10) + 1;
+    }
+
+    const labreportId = "LAB" + String(nextNumber).padStart(4, "0");
+
+    // ✅ Create lab report
+    const labReport = new LabReport({
+      labreportId,
+      patientId,
+      doctorId,
+      testId,
+      testDate,
+      result: null,          // explicitly null
+      payment: "not paid"    // default
+    });
+
     await labReport.save();
 
     res.status(201).json({
+      success: true,
       message: "Lab report created successfully",
       data: labReport
     });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("CREATE LAB REPORT ERROR:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
 
