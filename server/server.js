@@ -86,5 +86,8 @@ app.use("/api/payment", paymentRoutes);
 const labReportRoutes = require("./routes/labReportRoutes");
 app.use("/api/labreports", labReportRoutes);
 
+// test routes
+const testRoutes = require("./routes/testRoutes");
+app.use("/api/test", testRoutes);
 
   module.exports = app;

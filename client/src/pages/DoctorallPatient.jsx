@@ -36,7 +36,7 @@ export default function DoctorallPatient() {
      <Docsidebar/>
       {/* -------- Main content (RIGHT of sidebar) -------- */}
 <div className="ml-72 p-6">   {/* pushes content right by sidebar width */}
-  <h1 className="text-2xl font-semibold mb-4">Appointment Details</h1>
+  <h1 className="text-2xl font-semibold mb-4">Patient Details</h1>
 
   <div className="overflow-x-auto">
     <table className="min-w-full border-collapse border border-gray-300">
