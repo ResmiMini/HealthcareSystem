@@ -11,26 +11,24 @@ export default function Payment() {
 
   const [method, setMethod] = useState("");
   const [loading, setLoading] = useState(false);
-  const deleteAppointment = async (appointmentId) => {
+
+  const deleteAppointment = async (appointmentId) => 
+    {
   if (!window.confirm("Are you sure you want to delete this appointment?")) {
     return;
   }
 
-  try {
+  
     await axios.delete(
       `${import.meta.env.VITE_API_URL}/api/appointment/deleteappointment/${appointmentId}`
     );
 
     alert("Appointment deleted ✅");
+     navigate("/patientDashboard");
 
-    // remove from UI without reload
-    setAppointments((prev) =>
-      prev.filter((a) => a.appointmentId !== appointmentId)
-    );
+   
 
-  } catch (error) {
-    alert("Failed to delete appointment ❌");
-  }
+  
 };
 
   const handlePayment = () => {
@@ -120,7 +118,7 @@ export default function Payment() {
 
   <button
     onClick={() => deleteAppointment(appointmentId)}
-    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+    className="px-3 py-1  text-red rounded hover:bg-red-600"
   >
     cancel appointment
   </button>
