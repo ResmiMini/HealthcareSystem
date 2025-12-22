@@ -8,10 +8,10 @@ exports.createLabReport = async (req, res) => {
   try {
     await connectDB();
 
-    const { patientId, doctorId, testId, testDate } = req.body;
+    const { patientId, doctorId, testId} = req.body;
 
     //  Validation
-    if (!patientId || !doctorId || !testId || !testDate) {
+    if (!patientId || !doctorId || !testId) {
       return res.status(400).json({
         success: false,
         message: "All fields are required"
@@ -38,7 +38,6 @@ exports.createLabReport = async (req, res) => {
       patientId,
       doctorId,
       testId,
-      testDate,
       result: null,          // explicitly null
       payment: "not paid"    // default
     });
