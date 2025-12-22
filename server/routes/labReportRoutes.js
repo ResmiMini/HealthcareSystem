@@ -6,7 +6,7 @@ const labReportController = require("../controllers/labReportController");
 router.post("/add", labReportController.createLabReport);
 // router.get("/", labReportController.getAllLabReports);
 router.get("/labreportbyid/:id", labReportController.getLabReportById);
-router.put("/updateresult/:id", labReportController.updateLabReport);
+router.put("/updateresult/:id", labReportController.updateLabResult );
 //router.delete("/:id", labReportController.deleteLabReport);
 
 module.exports = router;
