@@ -72,35 +72,46 @@ export default function Patientviewlabresult() {
       <div className="p-6 w-full">
         <h2 className="text-xl font-bold mb-4">My Lab Results</h2>
 
-        <table className="w-full border bg-white">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Doctor</th>
-              <th>Test</th>
-              <th>Result</th>
-              <th>PDF</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reports.map((r, i) => (
-              <tr key={i}>
-                <td>{r.labReportId}</td>
-                <td>{r.doctorName}</td>
-                <td>{r.testName}</td>
-                <td>{r.result}</td>
-                <td>
-                  <button
-      onClick={() => viewPDF(r)}
-      className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-    >
-      View
-    </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <table className="w-full border border-gray-400 border-collapse bg-white">
+  <thead className="bg-gray-100">
+    <tr>
+      
+      <th className="border border-gray-400 px-3 py-2">Doctor</th>
+      <th className="border border-gray-400 px-3 py-2">Test</th>
+      <th className="border border-gray-400 px-3 py-2">Result</th>
+      <th className="border border-gray-400 px-3 py-2">PDF</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {reports.map((r, i) => (
+      <tr
+        key={r.labReportId || i}
+        className="hover:bg-gray-50"
+      >
+       
+        <td className="border border-gray-400 px-3 py-2 text-center">
+          {r.doctorName}
+        </td>
+        <td className="border border-gray-400 px-3 py-2 text-center">
+          {r.testName}
+        </td>
+        <td className="border border-gray-400 px-3 py-2 text-center font-semibold">
+          {r.result}
+        </td>
+        <td className="border border-gray-400 px-3 py-2 text-center">
+          <button
+            onClick={() => viewPDF(r)}
+            className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            View
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       </div>
     </div>
   );
