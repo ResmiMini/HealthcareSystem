@@ -6,9 +6,9 @@ const labReportController = require("../controllers/labReportController");
 router.post("/add", labReportController.createLabReport);
 // router.get("/", labReportController.getAllLabReports);
 router.get("/labreportbyid/:id", labReportController.getLabReportById);
-router.get("/patientreport/:patientId", controller.getLabReportsByPatient);
+router.get("/patientreport/:patientId", labReportController.getLabReportsByPatient);
 router.put("/updateresult/:id", labReportController.updateLabResult );
-router.get("/reportpdf/:labReportId", controller.generateLabReportPDF);
+router.get("/reportpdf/:labReportId", labReportController.generateLabReportPDF);
 
 //router.delete("/:id", labReportController.deleteLabReport);
 

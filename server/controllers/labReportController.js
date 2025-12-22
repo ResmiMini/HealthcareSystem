@@ -12,9 +12,8 @@ exports.createLabReport = async (req, res) => {
   try {
     await connectDB();
 
-    const { patientId, doctorId, testId} = req.body;
+    const { patientId, doctorId, testId } = req.body;
 
-    //  Validation
     if (!patientId || !doctorId || !testId) {
       return res.status(400).json({
         success: false,
@@ -22,28 +21,26 @@ exports.createLabReport = async (req, res) => {
       });
     }
 
-    // 🔢 AUTO-INCREMENT LAB REPORT ID
+    
     const lastReport = await LabReport.findOne()
       .sort({ createdAt: -1 })
-      .select("labreportId");
+      .select("labReportId");
 
     let nextNumber = 1;
 
-    if (lastReport && lastReport.labreportId) {
+    if (lastReport?.labReportId) {
       nextNumber =
-        parseInt(lastReport.labreportId.replace("LAB", ""), 10) + 1;
+        parseInt(lastReport.labReportId.replace("LAB", ""), 10) + 1;
     }
 
-    const labreportId = "LAB" + String(nextNumber).padStart(4, "0");
+    const labReportId = "LAB" + String(nextNumber).padStart(4, "0");
 
-    // ✅ Create lab report
     const labReport = new LabReport({
-      labreportId,
+      labReportId,
       patientId,
       doctorId,
       testId,
-      result: null,          // explicitly null
-      payment: "not paid"    // default
+      result: null
     });
 
     await labReport.save();
@@ -62,6 +59,7 @@ exports.createLabReport = async (req, res) => {
     });
   }
 };
+
 
 
 exports.getLabReportsByPatient = async (req, res) => {
