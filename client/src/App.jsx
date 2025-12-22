@@ -33,6 +33,7 @@ import Staffdashboard from './pages/Staffdashboard';
 import Staffmedicinebill from './pages/Staffmedicinebill';
 import AddTest from './pages/Addtest';
 import Updatelabresult from './pages/Updatelabresult';
+import Patientviewlabresult from './pages/Patientviewlabresult';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -49,7 +50,7 @@ function App() {
         <Route path="/patientviewreports" element={<Patientviewreports />} />
         <Route path="/patientmedicine" element={<Patientviewmedicine />} />
 
-
+<Route path="/labresults" element={<Patientviewlabresult/>}/>
 
 
         <Route path="/doctordashboard" element={<DoctorDashboard />} />
